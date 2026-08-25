@@ -4,7 +4,6 @@ import {
   IonCardContent,
   IonIcon,
   IonText,
-  IonBadge,
   IonGrid,
   IonRow,
   IonCol
@@ -19,7 +18,6 @@ import {
     IonCardContent,
     IonIcon,
     IonText,
-    IonBadge,
     IonGrid,
     IonRow,
     IonCol
