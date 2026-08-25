@@ -63,7 +63,7 @@ import {
   logOutOutline
 } from 'ionicons/icons';
 import { SoloService } from '../../services/solo.service';
-import { ApplicationRecord } from '../../models/solo.models';
+import { ApplicationRecord, SystemUser } from '../../models/solo.models';
 import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { ApplicationCardComponent } from '../../components/application-card/application-card.component';
 
@@ -121,12 +121,12 @@ export class DashboardPage implements OnInit {
   readonly stats = signal(this.soloService.getStats());
   readonly quickActions = signal(this.soloService.getQuickActions());
   readonly applications = signal(this.soloService.getApplications());
-  readonly admins = signal(this.soloService.getAdminsOnDuty());
+  readonly systemUsers = signal<SystemUser[]>(this.soloService.getSystemUsers());
   readonly agendas = signal(this.soloService.getAgendas());
 
   // Computed Signals for derived data (Unit 1.3)
   readonly totalApplicationsCount = computed(() => this.applications().length);
-  readonly onlineAdminsCount = computed(() => this.admins().filter(a => a.isOnline).length);
+  readonly onlineAdminsCount = computed(() => this.systemUsers().filter(u => u.status === 'ACTIVE').length);
   readonly interviewAgendas = computed(() => this.agendas().filter(a => a.category === 'INTERVIEW'));
   readonly dutyAdminAgendas = computed(() => this.agendas().filter(a => a.category === 'DUTY_ADMIN'));
   readonly announcementAgendas = computed(() => this.agendas().filter(a => a.category === 'ANNOUNCEMENT'));
@@ -166,6 +166,11 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  /** Refresh system users every time the dashboard is navigated to */
+  ionViewWillEnter(): void {
+    this.systemUsers.set(this.soloService.getSystemUsers());
+  }
 
   onSegmentChange(event: CustomEvent): void {
     const value = event.detail.value as 'applications' | 'users';

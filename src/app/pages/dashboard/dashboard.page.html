@@ -114,7 +114,7 @@
                     </ion-segment-button>
                     <ion-segment-button value="users">
                       <ion-icon name="people-outline"></ion-icon>
-                      <ion-label>System Users ({{ admins().length }})</ion-label>
+                      <ion-label>System Users ({{ systemUsers().length }})</ion-label>
                     </ion-segment-button>
                   </ion-segment>
                 </ion-col>
@@ -146,19 +146,25 @@
               </ion-list>
             } @else {
               <ion-list lines="full" class="users-container-list">
-                @for (admin of admins(); track admin.id) {
+                @for (user of systemUsers(); track user.id) {
                   <ion-item lines="full" class="system-user-row">
                     <ion-avatar slot="start" class="user-avatar-circle">
-                      <ion-text class="user-avatar-char">{{ admin.avatarChar }}</ion-text>
+                      <ion-text class="user-avatar-char">{{ user.avatarChar }}</ion-text>
                     </ion-avatar>
                     <ion-label>
-                      <ion-text color="dark" class="user-row-name">{{ admin.name }}</ion-text>
-                      <ion-note class="user-row-role">{{ admin.role }} • {{ admin.shiftTime }}</ion-note>
+                      <ion-text color="dark" class="user-row-name">{{ user.name }}</ion-text>
+                      <ion-note class="user-row-role">{{ user.role }} • {{ user.barangay }}</ion-note>
                     </ion-label>
-                    <ion-chip slot="end" color="success" class="status-chip">
+                    <ion-chip slot="end" [color]="user.status === 'ACTIVE' ? 'success' : 'medium'" class="status-chip">
                       <ion-icon name="checkmark-circle-outline"></ion-icon>
-                      <ion-label>{{ admin.statusText }}</ion-label>
+                      <ion-label>{{ user.status }}</ion-label>
                     </ion-chip>
+                  </ion-item>
+                } @empty {
+                  <ion-item lines="none" class="empty-state-row">
+                    <ion-label class="ion-text-center">
+                      <ion-note>No system users found.</ion-note>
+                    </ion-label>
                   </ion-item>
                 }
               </ion-list>

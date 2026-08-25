@@ -1,0 +1,395 @@
+// Add Account Modal Component
+// Positioned as a fixed overlay, matching the design mockup
+
+:host {
+  display: contents;
+}
+
+// ── Backdrop ──────────────────────────────────────────────
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+// ── Panel ─────────────────────────────────────────────────
+.modal-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: #ffffff;
+  border-radius: 20px;
+  width: min(660px, calc(100vw - 32px));
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+  animation: slideUp 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+// ── Header ────────────────────────────────────────────────
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px 18px;
+
+  .modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .modal-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #e6fffa;
+    border: 1px solid #99f6e4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.4rem;
+      color: #0c4a4a;
+    }
+  }
+
+  .modal-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.3px;
+      display: block;
+    }
+
+    .modal-subtitle {
+      font-size: 0.82rem;
+      color: #64748b;
+      display: block;
+    }
+  }
+
+  .modal-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    ion-icon {
+      font-size: 1.25rem;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+  }
+}
+
+.modal-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 0 24px;
+}
+
+// ── Body ──────────────────────────────────────────────────
+.modal-body {
+  padding: 24px 24px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+// ── Form Groups ───────────────────────────────────────────
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &.form-group--full {
+    width: 100%;
+  }
+}
+
+.form-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  display: block;
+
+  .required-star {
+    color: #ef4444;
+    margin-left: 2px;
+  }
+}
+
+// ── Input Wrap ────────────────────────────────────────────
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus-within {
+    border-color: #0c4a4a;
+    box-shadow: 0 0 0 3px rgba(12, 74, 74, 0.1);
+    background: #ffffff;
+  }
+
+  &.input-wrap--error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+  }
+
+  &.input-wrap--password {
+    .form-input {
+      flex: 1;
+    }
+  }
+
+  &.select-wrap {
+    padding: 0 4px 0 12px;
+  }
+}
+
+.form-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 13px 16px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  font-family: inherit;
+
+  &::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+  }
+}
+
+// Select styling
+.form-select {
+  --color: #0f172a;
+  --placeholder-color: #94a3b8;
+  font-size: 0.92rem;
+  font-weight: 500;
+  width: 100%;
+  padding: 4px 0;
+  min-height: 46px;
+}
+
+// ── Eye Button ────────────────────────────────────────────
+.eye-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 14px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    color: #0c4a4a;
+  }
+}
+
+// ── Hints & Errors ────────────────────────────────────────
+.password-hint {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  display: block;
+  margin-top: 2px;
+}
+
+.field-error {
+  font-size: 0.77rem;
+  color: #ef4444;
+  font-weight: 600;
+  display: block;
+  margin-top: 2px;
+}
+
+// ── Footer ────────────────────────────────────────────────
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 22px;
+
+  .btn-cancel {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: color 0.15s ease, background 0.15s ease;
+
+    &:hover {
+      color: #0f172a;
+      background: #f1f5f9;
+    }
+  }
+
+  .btn-create {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #0c4a4a;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 13px 24px;
+    border-radius: 12px;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(12, 74, 74, 0.3);
+
+    ion-icon {
+      font-size: 1.1rem;
+    }
+
+    .submit-spinner {
+      width: 18px;
+      height: 18px;
+      --color: #ffffff;
+    }
+
+    &:hover:not(:disabled) {
+      background: #073b3e;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(12, 74, 74, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ── Animations ────────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────
+@media (max-width: 640px) {
+  .modal-panel {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - 32px);
+    max-width: 520px;
+    max-height: calc(100vh - 32px);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .modal-header {
+    padding: 16px 18px 14px;
+
+    .modal-icon-wrap {
+      width: 40px;
+      height: 40px;
+
+      ion-icon {
+        font-size: 1.2rem;
+      }
+    }
+
+    .modal-header-text {
+      .modal-title {
+        font-size: 0.95rem;
+      }
+      .modal-subtitle {
+        font-size: 0.76rem;
+      }
+    }
+  }
+
+  .modal-divider {
+    margin: 0 18px;
+  }
+
+  .modal-body {
+    padding: 16px 18px 8px;
+    gap: 14px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-footer {
+    padding: 12px 18px 18px;
+    gap: 8px;
+
+    .btn-cancel {
+      padding: 10px 14px;
+      font-size: 0.82rem;
+    }
+
+    .btn-create {
+      padding: 11px 18px;
+      font-size: 0.85rem;
+    }
+  }
+}

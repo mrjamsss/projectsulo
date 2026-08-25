@@ -241,11 +241,15 @@
     font-weight: 700;
     color: #0f172a;
     display: block;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .user-row-role {
     font-size: 0.8rem;
     color: #64748b;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .status-chip {

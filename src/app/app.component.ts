@@ -66,7 +66,7 @@ import {
 export class AppComponent {
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'grid' },
-    { title: 'User Management', url: '/add-account', icon: 'people' },
+    { title: 'User Management', url: '/user-management', icon: 'people' },
   ];
 
   constructor() {

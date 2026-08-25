@@ -1,0 +1,565 @@
+// User Management Page – Project SOLO
+// Mirrors the design in the UI mockup
+
+.um-content {
+  --background: #f8fafc;
+  --padding-top: 20px;
+  --padding-bottom: 32px;
+  --padding-start: 24px;
+  --padding-end: 24px;
+}
+
+.um-toolbar {
+  --background: #ffffff;
+  --color: #0f3e46;
+  --border-color: rgba(0, 0, 0, 0.08);
+
+  .toolbar-brand-title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #0c4a4a;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .toolbar-sub-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #64748b;
+  }
+}
+
+.um-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+// ─── Page Title Row ───────────────────────────────────────
+.um-title-row {
+  margin-bottom: 20px;
+  align-items: center;
+
+  .um-page-title {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .um-page-subtitle {
+    display: block;
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .um-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .perm-requests-btn {
+      --color: #0c4a4a;
+      font-weight: 600;
+      font-size: 0.88rem;
+      position: relative;
+
+      .perm-badge {
+        --background: #ef4444;
+        --color: #ffffff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        border-radius: 999px;
+        min-width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin-left: 6px;
+      }
+    }
+
+    .add-account-btn {
+      --background: #0c4a4a;
+      --color: #ffffff;
+      --border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      --box-shadow: 0 4px 14px rgba(12, 74, 74, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        --background: #073b3e;
+        transform: translateY(-1px);
+        --box-shadow: 0 6px 20px rgba(12, 74, 74, 0.4);
+      }
+    }
+  }
+}
+
+// ─── Role Cards ───────────────────────────────────────────
+.role-cards-row {
+  margin-bottom: 20px;
+
+  ion-col {
+    padding: 6px;
+  }
+
+  .role-card {
+    margin: 0;
+    border-radius: 16px;
+    background: #ffffff;
+    --background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+
+    &:hover {
+      box-shadow: 0 6px 24px rgba(12, 74, 74, 0.12);
+      transform: translateY(-2px);
+    }
+
+    &.role-card--active {
+      border-color: #0c4a4a;
+      box-shadow: 0 6px 24px rgba(12, 74, 74, 0.18);
+    }
+
+    .role-card-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px;
+    }
+
+    .role-card-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 1.5rem;
+      }
+
+      &.role-icon--all {
+        background: #e6fffa;
+        ion-icon { color: #0c4a4a; }
+      }
+
+      &.role-icon--admin {
+        background: #eff6ff;
+        ion-icon { color: #2563eb; }
+      }
+
+      &.role-icon--soloparent {
+        background: #f0fdf4;
+        ion-icon { color: #16a34a; }
+      }
+    }
+
+    .role-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .role-card-title {
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        display: block;
+      }
+
+      .role-card-count {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #64748b;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .role-card-desc {
+        font-size: 0.8rem;
+        color: #64748b;
+        line-height: 1.4;
+        display: block;
+      }
+    }
+  }
+}
+
+// ─── Search + Filter Row ──────────────────────────────────
+.search-filter-row {
+  margin-bottom: 16px;
+  align-items: center;
+
+  .search-col {
+    padding: 4px;
+  }
+
+  .status-col {
+    padding: 4px;
+  }
+
+  .um-searchbar {
+    --background: #ffffff;
+    --border-radius: 12px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --color: #0f172a;
+    --placeholder-color: #94a3b8;
+    --icon-color: #94a3b8;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    height: 48px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.9rem;
+  }
+
+  .status-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0 12px;
+    height: 48px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    .status-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+
+    .um-status-select {
+      --color: #0f172a;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+  }
+}
+
+// ─── User List Card ───────────────────────────────────────
+.user-list-row {
+  .user-list-card {
+    margin: 0;
+    border-radius: 18px;
+    background: #ffffff;
+    --background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+
+    .user-list-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px 14px;
+      border-bottom: 2px solid #f1f5f9;
+
+      .list-header-icon {
+        font-size: 1.2rem;
+        color: #0c4a4a;
+      }
+
+      .list-header-title {
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+      }
+    }
+
+    .um-user-list {
+      background: #ffffff;
+      --background: #ffffff;
+      padding: 0;
+    }
+  }
+}
+
+// ─── User Row ─────────────────────────────────────────────
+.um-user-row {
+  --background: #ffffff;
+  --color: #0f172a;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --min-height: 68px;
+  --inner-padding-end: 0;
+  transition: background 0.15s ease;
+
+  &:hover {
+    --background: #f8fafc;
+  }
+
+  .um-user-avatar {
+    width: 42px;
+    height: 42px;
+    background: #0f3e46;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 12px;
+
+    .um-avatar-char {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+  }
+
+  .um-user-label {
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .um-user-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: block;
+      line-height: 1.25;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .um-user-meta {
+      font-size: 0.78rem;
+      color: #64748b;
+      display: block;
+      line-height: 1.25;
+      white-space: normal;
+      word-break: break-all;
+    }
+  }
+
+  .um-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    flex-shrink: 0;
+
+    // Role badge pill
+    .role-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      white-space: nowrap;
+
+      &.badge-superadmin {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #cbd5e1;
+      }
+
+      &.badge-admin {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #cbd5e1;
+      }
+
+      &.badge-soloparent {
+        background: #f0fdf4;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+    }
+
+    // Status chip
+    .status-chip {
+      --color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      height: 26px;
+      margin: 0;
+      --padding-start: 6px;
+      --padding-end: 8px;
+
+      ion-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      &.status-chip--active {
+        --background: transparent;
+        --color: #16a34a;
+        border-color: #86efac;
+
+        .status-dot-icon {
+          color: #22c55e;
+          font-size: 0.85rem;
+        }
+      }
+
+      &.status-chip--inactive {
+        --background: transparent;
+        --color: #94a3b8;
+        border-color: #cbd5e1;
+
+        .status-dot-icon {
+          color: #94a3b8;
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    // View button
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: #0c4a4a;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background: rgba(12, 74, 74, 0.08);
+      }
+
+      ion-icon {
+        font-size: 1rem;
+        color: #0c4a4a;
+      }
+
+      .view-btn-text {
+        color: #0c4a4a;
+      }
+    }
+  }
+}
+
+// ─── Empty State ──────────────────────────────────────────
+.um-empty-state {
+  --background: #ffffff;
+  --padding-top: 40px;
+  --padding-bottom: 40px;
+  text-align: center;
+
+  .empty-icon {
+    font-size: 3rem;
+    color: #cbd5e1;
+    display: block;
+    margin: 0 auto 12px;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────
+@media (max-width: 640px) {
+  .um-content {
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+
+  .um-title-row {
+    .um-page-title {
+      font-size: 1.5rem;
+    }
+
+    .um-header-actions {
+      justify-content: flex-start;
+    }
+  }
+
+  .um-user-row {
+    --padding-start: 10px;
+    --padding-end: 12px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+
+    .um-user-avatar {
+      width: 38px;
+      height: 38px;
+      margin-right: 8px;
+
+      .um-avatar-char {
+        font-size: 0.95rem;
+      }
+    }
+
+    .um-user-label {
+      .um-user-name {
+        font-size: 0.9rem;
+      }
+      .um-user-meta {
+        font-size: 0.75rem;
+      }
+    }
+
+    .um-user-actions {
+      gap: 4px;
+      margin-left: 6px;
+
+      .role-badge {
+        font-size: 0.64rem;
+        padding: 3px 5px;
+      }
+
+      .status-chip {
+        height: 24px;
+        --padding-start: 4px;
+        --padding-end: 6px;
+
+        ion-label {
+          font-size: 0.7rem;
+        }
+
+        .status-dot-icon {
+          font-size: 0.8rem;
+        }
+      }
+
+      .view-btn {
+        font-size: 0.74rem;
+        padding: 4px 6px;
+        gap: 3px;
+
+        ion-icon {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
