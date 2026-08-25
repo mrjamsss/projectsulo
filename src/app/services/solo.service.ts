@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction } from '../models/solo.models';
+import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction, SystemUser } from '../models/solo.models';
+
 
 @Injectable({
   providedIn: 'root',
@@ -303,5 +304,53 @@ export class SoloService {
       avatarColor: '#0b4f4f',
     };
     this.applications = [newRecord, ...this.applications];
+  }
+
+  private readonly defaultSystemUsers: SystemUser[] = [
+    { id: 1, name: 'Admin Administrator', email: 'admin@solo.com', barangay: 'General Luna', role: 'SUPERADMIN', status: 'ACTIVE', avatarChar: 'A' },
+    { id: 2, name: 'Jane Doe', email: 'jane.officer@solo.com', barangay: 'San Josef Sur', role: 'ADMIN', status: 'ACTIVE', avatarChar: 'J' },
+    { id: 3, name: 'Mark Bautista', email: 'mark.bautista@solo.com', barangay: 'Mabini Extension', role: 'ADMIN', status: 'ACTIVE', avatarChar: 'M' },
+    { id: 4, name: 'Maria Santos', email: 'parent@solo.com', barangay: 'Zulueta', role: 'SOLO PARENT', status: 'ACTIVE', avatarChar: 'M' },
+    { id: 5, name: 'Juan Dela Cruz', email: 'juan.delacruz@gmail.com', barangay: 'San Josef Norte', role: 'SOLO PARENT', status: 'ACTIVE', avatarChar: 'J' },
+    { id: 6, name: 'Rosa Mendoza', email: 'rosa.mendoza@yahoo.com', barangay: 'Mabini Homesite', role: 'SOLO PARENT', status: 'ACTIVE', avatarChar: 'R' },
+    { id: 7, name: 'Carlos Reyes', email: 'carlos.reyes@gmail.com', barangay: 'Kapitan Pepe', role: 'SOLO PARENT', status: 'INACTIVE', avatarChar: 'C' },
+  ];
+
+  private systemUsers: SystemUser[] = this.loadSystemUsers();
+
+  private loadSystemUsers(): SystemUser[] {
+    try {
+      const saved = localStorage.getItem('solo_system_users');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Error loading system users from localStorage', e);
+    }
+    return [...this.defaultSystemUsers];
+  }
+
+  private saveSystemUsers(): void {
+    try {
+      localStorage.setItem('solo_system_users', JSON.stringify(this.systemUsers));
+    } catch (e) {
+      console.error('Error saving system users to localStorage', e);
+    }
+  }
+
+  getSystemUsers(): SystemUser[] {
+    return [...this.systemUsers];
+  }
+
+  getSystemUsersByRole(role: SystemUser['role']): SystemUser[] {
+    return this.systemUsers.filter(u => u.role === role);
+  }
+
+  addSystemUser(user: SystemUser): void {
+    this.systemUsers = [user, ...this.systemUsers];
+    this.saveSystemUsers();
   }
 }

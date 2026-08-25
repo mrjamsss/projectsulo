@@ -53,3 +53,16 @@ export interface QuickAction {
   route: string;
   color: string;
 }
+
+export type UserRole = 'SUPERADMIN' | 'ADMIN' | 'SOLO PARENT';
+export type UserStatus = 'ACTIVE' | 'INACTIVE';
+
+export interface SystemUser {
+  id: number;
+  name: string;
+  email: string;
+  barangay: string;
+  role: UserRole;
+  status: UserStatus;
+  avatarChar: string;
+}

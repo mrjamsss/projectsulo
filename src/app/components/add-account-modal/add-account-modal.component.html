@@ -1,0 +1,175 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop" (click)="dismiss()"></div>
+
+<!-- Modal Panel -->
+<div class="modal-panel">
+
+  <!-- Modal Header -->
+  <div class="modal-header">
+    <div class="modal-header-left">
+      <div class="modal-icon-wrap">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+      <div class="modal-header-text">
+        <ion-text class="modal-title">ADD USER ACCOUNT</ion-text>
+        <ion-note class="modal-subtitle">Create a new system user or solo parent profile</ion-note>
+      </div>
+    </div>
+    <button class="modal-close-btn" (click)="dismiss()" aria-label="Close">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  </div>
+
+  <!-- Divider -->
+  <div class="modal-divider"></div>
+
+  <!-- Modal Body -->
+  <div class="modal-body">
+
+    <!-- Full Name -->
+    <div class="form-group form-group--full">
+      <label class="form-label">FULL NAME <span class="required-star">*</span></label>
+      <div class="input-wrap" [class.input-wrap--error]="errors()['name']">
+        <input
+          class="form-input"
+          type="text"
+          placeholder="e.g. Maria Santos"
+          [value]="fullName()"
+          (input)="fullName.set($any($event.target).value)"
+        />
+      </div>
+      @if (errors()['name']) {
+        <span class="field-error">{{ errors()['name'] }}</span>
+      }
+    </div>
+
+    <!-- Email Address -->
+    <div class="form-group form-group--full">
+      <label class="form-label">EMAIL ADDRESS <span class="required-star">*</span></label>
+      <div class="input-wrap" [class.input-wrap--error]="errors()['email']">
+        <input
+          class="form-input"
+          type="email"
+          placeholder="e.g. maria@solo.com"
+          [value]="email()"
+          (input)="email.set($any($event.target).value)"
+        />
+      </div>
+      @if (errors()['email']) {
+        <span class="field-error">{{ errors()['email'] }}</span>
+      }
+    </div>
+
+    <!-- Login Password -->
+    <div class="form-group form-group--full">
+      <label class="form-label">LOGIN PASSWORD <span class="required-star">*</span></label>
+      <div class="input-wrap input-wrap--password" [class.input-wrap--error]="errors()['password']">
+        <input
+          class="form-input"
+          [type]="showPassword() ? 'text' : 'password'"
+          placeholder="Set account password (e.g. pass123)"
+          [value]="password()"
+          (input)="password.set($any($event.target).value)"
+        />
+        <button class="eye-btn" type="button" (click)="togglePasswordVisibility()">
+          <ion-icon [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </button>
+      </div>
+      @if (errors()['password']) {
+        <span class="field-error">{{ errors()['password'] }}</span>
+      } @else {
+        <ion-note class="password-hint">This specific password will be required when logging in with this account.</ion-note>
+      }
+    </div>
+
+    <!-- Phone + Role Row -->
+    <div class="form-row">
+      <!-- Phone Number -->
+      <div class="form-group">
+        <label class="form-label">PHONE NUMBER</label>
+        <div class="input-wrap">
+          <input
+            class="form-input"
+            type="tel"
+            placeholder="+63 917 000 0000"
+            [value]="phone()"
+            (input)="phone.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <!-- Account Role -->
+      <div class="form-group">
+        <label class="form-label">ACCOUNT ROLE <span class="required-star">*</span></label>
+        <div class="input-wrap select-wrap" [class.input-wrap--error]="errors()['role']">
+          <ion-select
+            class="form-select"
+            interface="popover"
+            [value]="role()"
+            (ionChange)="onRoleChange($event)"
+            placeholder="Select Role"
+          >
+            <ion-select-option value="SOLO PARENT">Solo Parent</ion-select-option>
+            <ion-select-option value="ADMIN">Admin</ion-select-option>
+            <ion-select-option value="SUPERADMIN">Super Admin</ion-select-option>
+          </ion-select>
+        </div>
+        @if (errors()['role']) {
+          <span class="field-error">{{ errors()['role'] }}</span>
+        }
+      </div>
+    </div>
+
+    <!-- Position + Barangay Row -->
+    <div class="form-row">
+      <!-- Position / Designation -->
+      <div class="form-group">
+        <label class="form-label">POSITION / DESIGNATION</label>
+        <div class="input-wrap">
+          <input
+            class="form-input"
+            type="text"
+            placeholder="e.g. Solo Parent Applicant"
+            [value]="position()"
+            (input)="position.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <!-- Barangay / Location -->
+      <div class="form-group">
+        <label class="form-label">BARANGAY / LOCATION</label>
+        <div class="input-wrap">
+          <input
+            class="form-input"
+            type="text"
+            placeholder="e.g. Zulueta / San Josef"
+            [value]="barangay()"
+            (input)="barangay.set($any($event.target).value)"
+          />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal Footer -->
+  <div class="modal-footer">
+    <button class="btn-cancel" type="button" (click)="dismiss()">CANCEL</button>
+    <button
+      class="btn-create"
+      type="button"
+      [disabled]="isSubmitting()"
+      (click)="onSubmit()"
+    >
+      @if (isSubmitting()) {
+        <ion-spinner name="crescent" class="submit-spinner"></ion-spinner>
+        CREATING...
+      } @else {
+        <ion-icon name="person-add-outline"></ion-icon>
+        CREATE ACCOUNT
+      }
+    </button>
+  </div>
+
+</div>

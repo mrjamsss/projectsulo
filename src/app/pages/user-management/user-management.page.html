@@ -1,0 +1,207 @@
+<ion-header [translucent]="true" class="um-header">
+  <ion-toolbar class="um-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-text class="toolbar-brand-title">Project SOLO</ion-text>
+      <ion-note class="toolbar-sub-title">Republic Act 11861 Portal</ion-note>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="um-content">
+  <ion-grid class="um-container ion-no-padding">
+
+    <!-- Page Title Row -->
+    <ion-row class="um-title-row">
+      <ion-col size="12" size-md="7">
+        <ion-text class="um-page-title">User Management</ion-text>
+        <ion-note class="um-page-subtitle">
+          Manage system accounts, administrator privileges, and solo parent profiles.
+        </ion-note>
+      </ion-col>
+      <ion-col size="12" size-md="5" class="um-header-actions">
+        <!-- Permission Requests -->
+        <ion-button fill="clear" class="perm-requests-btn">
+          <ion-icon slot="start" name="notifications-outline"></ion-icon>
+          <ion-text>Permission Requests</ion-text>
+          <ion-badge class="perm-badge" slot="end">{{ permissionRequestsCount() }}</ion-badge>
+        </ion-button>
+
+        <!-- Add Account Button -->
+        <ion-button (click)="openAddModal()" class="add-account-btn" shape="round">
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
+          Add Account
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Role Filter Cards Row -->
+    <ion-row class="role-cards-row">
+      <!-- ALL USERS Card -->
+      <ion-col size="12" size-md="4">
+        <ion-card
+          class="role-card"
+          [class.role-card--active]="activeRoleFilter() === 'ALL'"
+          (click)="setRoleFilter('ALL')"
+          button
+          mode="ios">
+          <ion-card-content class="role-card-content">
+            <div class="role-card-icon-wrap role-icon--all">
+              <ion-icon name="people-circle-outline"></ion-icon>
+            </div>
+            <div class="role-card-info">
+              <ion-text class="role-card-title">ALL USERS</ion-text>
+              <ion-note class="role-card-count">{{ totalUsersCount() }} users</ion-note>
+              <ion-note class="role-card-desc">View all accounts in the system.</ion-note>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- ADMIN Card -->
+      <ion-col size="12" size-md="4">
+        <ion-card
+          class="role-card"
+          [class.role-card--active]="activeRoleFilter() === 'ADMIN'"
+          (click)="setRoleFilter('ADMIN')"
+          button
+          mode="ios">
+          <ion-card-content class="role-card-content">
+            <div class="role-card-icon-wrap role-icon--admin">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+            </div>
+            <div class="role-card-info">
+              <ion-text class="role-card-title">ADMIN</ion-text>
+              <ion-note class="role-card-count">{{ adminCount() }} users</ion-note>
+              <ion-note class="role-card-desc">Can manage beneficiaries, applications, and generate reports.</ion-note>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- SOLO PARENT Card -->
+      <ion-col size="12" size-md="4">
+        <ion-card
+          class="role-card"
+          [class.role-card--active]="activeRoleFilter() === 'SOLO PARENT'"
+          (click)="setRoleFilter('SOLO PARENT')"
+          button
+          mode="ios">
+          <ion-card-content class="role-card-content">
+            <div class="role-card-icon-wrap role-icon--soloparent">
+              <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <div class="role-card-info">
+              <ion-text class="role-card-title">SOLO PARENT</ion-text>
+              <ion-note class="role-card-count">{{ soloParentCount() }} users</ion-note>
+              <ion-note class="role-card-desc">Can submit applications, view their status, and receive announcements.</ion-note>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Search + Status Filter Row -->
+    <ion-row class="search-filter-row">
+      <ion-col size="12" size-md="8" class="search-col">
+        <ion-searchbar
+          class="um-searchbar"
+          placeholder="Search by name, email, or phone..."
+          [debounce]="300"
+          (ionInput)="onSearchChange($event)"
+          search-icon="search-outline"
+          mode="md"
+        ></ion-searchbar>
+      </ion-col>
+      <ion-col size="12" size-md="4" class="status-col">
+        <div class="status-select-wrap">
+          <ion-text class="status-label">STATUS:</ion-text>
+          <ion-select
+            class="um-status-select"
+            interface="popover"
+            [value]="statusFilter()"
+            (ionChange)="onStatusFilterChange($event)"
+          >
+            <ion-select-option value="ALL">All Status</ion-select-option>
+            <ion-select-option value="ACTIVE">Active</ion-select-option>
+            <ion-select-option value="INACTIVE">Inactive</ion-select-option>
+          </ion-select>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- User List Table -->
+    <ion-row class="user-list-row">
+      <ion-col size="12">
+        <ion-card class="user-list-card" mode="ios">
+          <ion-card-content class="ion-no-padding">
+            <!-- Table Header -->
+            <div class="user-list-header">
+              <ion-icon name="people-circle-outline" class="list-header-icon"></ion-icon>
+              <ion-text class="list-header-title">SYSTEM USERS ({{ filteredUsers().length }})</ion-text>
+            </div>
+
+            <ion-list lines="full" class="um-user-list">
+              @for (user of filteredUsers(); track user.id) {
+                <ion-item class="um-user-row" lines="full">
+                  <!-- Avatar -->
+                  <ion-avatar slot="start" class="um-user-avatar">
+                    <ion-text class="um-avatar-char">{{ user.avatarChar }}</ion-text>
+                  </ion-avatar>
+
+                  <!-- Name + Email + Barangay -->
+                  <ion-label class="um-user-label">
+                    <ion-text class="um-user-name">{{ user.name }}</ion-text>
+                    <ion-note class="um-user-meta">{{ user.email }} • {{ user.barangay }}</ion-note>
+                  </ion-label>
+
+                  <!-- Role Badge + Status Chip + View -->
+                  <div slot="end" class="um-user-actions">
+                    <span class="role-badge" [ngClass]="getRoleBadgeClass(user.role)">
+                      {{ user.role }}
+                    </span>
+
+                    <ion-chip
+                      class="status-chip"
+                      [class.status-chip--active]="user.status === 'ACTIVE'"
+                      [class.status-chip--inactive]="user.status === 'INACTIVE'"
+                      outline>
+                      <ion-icon
+                        [name]="user.status === 'ACTIVE' ? 'checkmark-circle' : 'ellipse-outline'"
+                        class="status-dot-icon"
+                      ></ion-icon>
+                      <ion-label>{{ user.status }}</ion-label>
+                    </ion-chip>
+
+                    <button class="view-btn" type="button" aria-label="View user details">
+                      <ion-icon name="eye-outline"></ion-icon>
+                      <span class="view-btn-text">VIEW</span>
+                    </button>
+                  </div>
+                </ion-item>
+              } @empty {
+                <ion-item lines="none" class="um-empty-state">
+                  <ion-label class="ion-text-center">
+                    <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+                    <p>No users found matching your filters.</p>
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
+
+<!-- Add Account Modal -->
+@if (showAddModal()) {
+  <app-add-account-modal
+    (dismissed)="closeAddModal()"
+    (accountCreated)="onAccountCreated($event)"
+  ></app-add-account-modal>
+}
