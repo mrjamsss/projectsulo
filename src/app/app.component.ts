@@ -35,6 +35,8 @@ import {
   personSharp
 } from 'ionicons/icons';
 
+import { ToastNotificationComponent } from './components/toast-notification/toast-notification.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -55,7 +57,8 @@ import {
     IonMenuToggle,
     IonRouterOutlet,
     IonFooter,
-    IonButton
+    IonButton,
+    ToastNotificationComponent
   ],
 })
 export class AppComponent {
