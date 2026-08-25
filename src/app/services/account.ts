@@ -1,6 +1,1 @@
-import { Service } from '@angular/core';
-
-@Service()
-export class Account {
-  
-}
+export * from './account.service';

@@ -8,28 +8,28 @@
               <ion-icon name="grid" aria-hidden="true"></ion-icon>
             </div>
             <div class="brand-text">
-              <h2>Projectsulo</h2>
-              <p>Navigation System</p>
+              <h2>Project SOLO</h2>
+              <p>RA 11861 Portal</p>
             </div>
           </div>
 
           <div class="user-profile-card">
-            <div class="user-avatar">
-              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-            </div>
+            <ion-avatar class="user-avatar">
+              <ion-text class="user-avatar-initial">A</ion-text>
+            </ion-avatar>
             <div class="user-info">
-              <span class="user-name">John Doe</span>
-              <span class="user-role">Administrator</span>
+              <span class="user-name">Admin Administrator</span>
+              <span class="user-role">Federation Head</span>
             </div>
           </div>
         </div>
 
         <ion-list id="main-menu-list" lines="none">
-          <ion-list-header>Main Menu</ion-list-header>
+          <ion-list-header>NAVIGATION</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-icon aria-hidden="true" slot="start" [name]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -40,8 +40,8 @@
         <div class="sidebar-footer">
           <ion-menu-toggle auto-hide="false">
             <ion-button expand="block" fill="clear" color="danger" class="logout-btn">
-              <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
-              Logout
+              <ion-icon slot="start" name="log-out-outline"></ion-icon>
+              Sign Out
             </ion-button>
           </ion-menu-toggle>
         </div>
@@ -51,4 +51,3 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
-
