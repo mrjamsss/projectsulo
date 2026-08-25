@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction, SystemUser } from '../models/solo.models';
+import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction, SystemUser, UserStatus } from '../models/solo.models';
 
 
 @Injectable({
@@ -352,5 +352,19 @@ export class SoloService {
   addSystemUser(user: SystemUser): void {
     this.systemUsers = [user, ...this.systemUsers];
     this.saveSystemUsers();
+  }
+
+  toggleSystemUserStatus(userId: number): SystemUser | null {
+    let updatedUser: SystemUser | null = null;
+    this.systemUsers = this.systemUsers.map(user => {
+      if (user.id === userId) {
+        const nextStatus: UserStatus = user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        updatedUser = { ...user, status: nextStatus };
+        return updatedUser;
+      }
+      return user;
+    });
+    this.saveSystemUsers();
+    return updatedUser;
   }
 }

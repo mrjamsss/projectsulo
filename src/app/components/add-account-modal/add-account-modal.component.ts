@@ -39,7 +39,6 @@ export interface AddAccountFormData {
   imports: [
     CommonModule,
     FormsModule,
-    IonButton,
     IonIcon,
     IonText,
     IonNote,

@@ -145,7 +145,7 @@
 
             <ion-list lines="full" class="um-user-list">
               @for (user of filteredUsers(); track user.id) {
-                <ion-item class="um-user-row" lines="full">
+                <ion-item button (click)="openViewUserModal(user)" class="um-user-row" lines="full" detail="false">
                   <!-- Avatar -->
                   <ion-avatar slot="start" class="um-user-avatar">
                     <ion-text class="um-avatar-char">{{ user.avatarChar }}</ion-text>
@@ -175,7 +175,7 @@
                       <ion-label>{{ user.status }}</ion-label>
                     </ion-chip>
 
-                    <button class="view-btn" type="button" aria-label="View user details">
+                    <button class="view-btn" type="button" aria-label="View user details" (click)="openViewUserModal(user); $event.stopPropagation()">
                       <ion-icon name="eye-outline"></ion-icon>
                       <span class="view-btn-text">VIEW</span>
                     </button>
@@ -205,3 +205,11 @@
     (accountCreated)="onAccountCreated($event)"
   ></app-add-account-modal>
 }
+
+<!-- Standalone Reusable View Account Modal Component -->
+<app-view-account-modal
+  [user]="selectedUser()"
+  [isOpen]="showViewModal()"
+  (closeModal)="closeViewUserModal()"
+  (toggleStatus)="handleToggleStatus($event)"
+></app-view-account-modal>

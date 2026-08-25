@@ -1,0 +1,111 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onClose()" class="view-account-modal" mode="ios">
+  <ng-template>
+    @if (user(); as u) {
+      <ion-header class="modal-header">
+        <ion-toolbar class="modal-toolbar">
+          <ion-title>Account Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="onClose()" fill="clear" color="light">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="modal-content-body">
+        <!-- User Profile Hero Banner -->
+        <ion-grid class="modal-profile-hero ion-no-padding">
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-col size="auto" class="ion-text-center">
+              <ion-avatar class="modal-user-avatar">
+                <ion-text class="modal-avatar-char">{{ u.avatarChar }}</ion-text>
+              </ion-avatar>
+              <ion-text color="dark" class="modal-user-name">
+                <h2>{{ u.name }}</h2>
+              </ion-text>
+              <ion-chip [color]="getRoleColor(u.role)" class="modal-role-chip">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                <ion-label>{{ u.role }}</ion-label>
+              </ion-chip>
+
+              <ion-row class="ion-justify-content-center ion-margin-top">
+                @if (u.status === 'ACTIVE') {
+                  <ion-chip color="success" class="modal-status-chip">
+                    <ion-icon name="checkmark-circle-outline"></ion-icon>
+                    <ion-label>ACTIVE ACCOUNT</ion-label>
+                  </ion-chip>
+                } @else {
+                  <ion-chip color="medium" class="modal-status-chip">
+                    <ion-icon name="close-circle-outline"></ion-icon>
+                    <ion-label>INACTIVE ACCOUNT</ion-label>
+                  </ion-chip>
+                }
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- Detailed Field List -->
+        <ion-list lines="full" class="user-info-list">
+          <ion-item>
+            <ion-icon slot="start" name="mail-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Email Address</ion-note>
+              <ion-text color="dark"><p>{{ u.email }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon slot="start" name="location-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Assigned Barangay</ion-note>
+              <ion-text color="dark"><p>{{ u.barangay }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon slot="start" name="ribbon-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Role Privileges</ion-note>
+              <ion-text color="dark"><p>{{ getRoleDescription(u.role) }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon slot="start" name="key-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>System User ID</ion-note>
+              <ion-text color="dark"><p>SOLO-USR-{{ u.id }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer class="modal-footer ion-no-border">
+        <ion-toolbar class="modal-footer-toolbar">
+          <ion-grid class="ion-no-padding">
+            <ion-row>
+              <ion-col size="6">
+                <ion-button
+                  expand="block"
+                  fill="outline"
+                  [color]="u.status === 'ACTIVE' ? 'warning' : 'success'"
+                  (click)="onToggleStatus()"
+                  class="modal-action-btn"
+                >
+                  <ion-icon slot="start" [name]="u.status === 'ACTIVE' ? 'pause-outline' : 'play-outline'"></ion-icon>
+                  {{ u.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button expand="block" color="primary" (click)="onClose()" class="modal-action-btn">
+                  Close
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-toolbar>
+      </ion-footer>
+    }
+  </ng-template>
+</ion-modal>

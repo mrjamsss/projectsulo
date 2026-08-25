@@ -49,6 +49,7 @@ import {
 import { SoloService } from '../../services/solo.service';
 import { SystemUser, UserRole, UserStatus } from '../../models/solo.models';
 import { AddAccountModalComponent } from '../../components/add-account-modal/add-account-modal.component';
+import { ViewAccountModalComponent } from '../../components/view-account-modal/view-account-modal.component';
 
 type FilterRole = 'ALL' | UserRole;
 
@@ -59,7 +60,6 @@ type FilterRole = 'ALL' | UserRole;
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -84,7 +84,8 @@ type FilterRole = 'ALL' | UserRole;
     IonSearchbar,
     IonSelect,
     IonSelectOption,
-    AddAccountModalComponent
+    AddAccountModalComponent,
+    ViewAccountModalComponent
   ],
 })
 export class UserManagementPage implements OnInit {
@@ -126,8 +127,10 @@ export class UserManagementPage implements OnInit {
   // Permission requests badge count (static demo)
   readonly permissionRequestsCount = signal<number>(2);
 
-  // Modal visibility
+  // Modal visibility signals
   readonly showAddModal = signal<boolean>(false);
+  readonly showViewModal = signal<boolean>(false);
+  readonly selectedUser = signal<SystemUser | null>(null);
 
   constructor() {
     addIcons({
@@ -161,6 +164,24 @@ export class UserManagementPage implements OnInit {
 
   closeAddModal(): void {
     this.showAddModal.set(false);
+  }
+
+  openViewUserModal(user: SystemUser): void {
+    this.selectedUser.set(user);
+    this.showViewModal.set(true);
+  }
+
+  closeViewUserModal(): void {
+    this.showViewModal.set(false);
+    this.selectedUser.set(null);
+  }
+
+  handleToggleStatus(userId: number): void {
+    const updated = this.soloService.toggleSystemUserStatus(userId);
+    if (updated) {
+      this.allUsers.set(this.soloService.getSystemUsers());
+      this.selectedUser.set(updated);
+    }
   }
 
   onAccountCreated(newUser: SystemUser): void {
