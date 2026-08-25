@@ -191,6 +191,11 @@ export class DashboardPage implements OnInit {
 
   ngOnInit(): void {}
 
+  ionViewWillEnter(): void {
+    this.admins.set(this.soloService.getAdminsOnDuty());
+    this.applications.set(this.soloService.getApplications());
+  }
+
   onSegmentChange(event: CustomEvent): void {
     const value = event.detail.value as 'applications' | 'users';
     if (value) {
