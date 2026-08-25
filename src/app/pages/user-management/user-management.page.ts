@@ -46,6 +46,7 @@ import {
   logOutOutline
 } from 'ionicons/icons';
 import { SoloService } from '../../services/solo.service';
+import { ToastService } from '../../services/toast.service';
 import { SystemUser, UserRole, UserStatus } from '../../models/solo.models';
 import { AddAccountModalComponent } from '../../components/add-account-modal/add-account-modal.component';
 import { ViewAccountModalComponent } from '../../components/view-account-modal/view-account-modal.component';
@@ -88,6 +89,7 @@ type FilterRole = 'ALL' | UserRole;
 })
 export class UserManagementPage implements OnInit {
   private soloService = inject(SoloService);
+  private toastService = inject(ToastService);
 
   readonly allUsers = signal<SystemUser[]>(this.soloService.getSystemUsers());
   readonly searchQuery = signal<string>('');
@@ -179,6 +181,18 @@ export class UserManagementPage implements OnInit {
     if (updated) {
       this.allUsers.set(this.soloService.getSystemUsers());
       this.selectedUser.set(updated);
+
+      if (updated.status === 'INACTIVE') {
+        this.toastService.warning(
+          `Account for ${updated.name} has been deactivated.`,
+          'Account Deactivated'
+        );
+      } else {
+        this.toastService.success(
+          `Account for ${updated.name} has been activated.`,
+          'Account Activated'
+        );
+      }
     }
   }
 
