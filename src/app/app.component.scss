@@ -1,3 +1,5 @@
+@use "../theme/variables.scss" as *;
+
 ion-menu {
   --width: 280px;
 
@@ -79,6 +81,7 @@ ion-menu {
     .user-info {
       display: flex;
       flex-direction: column;
+      line-height: 1.0;
 
       .user-name {
         font-size: 0.9rem;
@@ -96,7 +99,7 @@ ion-menu {
 }
 
 ion-list {
-  padding: 8px 12px;
+  padding: 12px 14px;
   background: transparent;
 
   ion-list-header {
@@ -107,13 +110,13 @@ ion-list {
     color: #5eead4;
     min-height: 28px;
     padding-left: 12px;
-    margin-top: 8px;
-    margin-bottom: 4px;
+    margin-top: 12px;
+    margin-bottom: 8px;
   }
 
   ion-item {
-    --padding-start: 12px;
-    --padding-end: 12px;
+    --padding-start: 14px;
+    --padding-end: 14px;
     --min-height: 48px;
     --border-radius: 12px;
     --background: transparent;
@@ -126,7 +129,7 @@ ion-list {
       font-size: 20px;
       color: #99f6e4;
       margin-right: 14px;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: transform 0.2s ease;
     }
 
     ion-label {
