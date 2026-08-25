@@ -1,11 +1,32 @@
 @use "../theme/variables.scss" as *;
 
+ion-split-pane {
+  --side-width: 250px;
+  --side-min-width: 250px;
+  --side-max-width: 250px;
+}
+
 ion-menu {
-  --width: 280px;
+  --width: 250px;
+  --min-width: 250px;
+  --max-width: 250px;
+  max-width: 250px;
 
   ion-content {
     --background: #003840;
+    --overflow: hidden;
     color: #ffffff;
+
+    &::part(scroll) {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
   }
 }
 
