@@ -49,28 +49,28 @@ export interface AddAccountFormData {
   ],
 })
 export class AddAccountModalComponent {
-  /** Emitted when the user dismisses the modal (cancel or backdrop) */
+  
   readonly dismissed = output<void>();
-  /** Emitted when a new user was successfully created */
+  
   readonly accountCreated = output<SystemUser>();
 
   private soloService = inject(SoloService);
   private toastService = inject(ToastService);
 
-  // Form fields
-  readonly fullName = signal<string>('');
-  readonly email = signal<string>('');
-  readonly password = signal<string>('');
-  readonly phone = signal<string>('');
-  readonly role = signal<UserRole>('SOLO PARENT');
-  readonly position = signal<string>('Solo Parent Applicant');
-  readonly barangay = signal<string>('');
+  // Form fields (Bound via [(ngModel)])
+  fullName = '';
+  email = '';
+  password = '';
+  phone = '';
+  role: UserRole = 'SOLO PARENT';
+  position = 'Solo Parent Applicant';
+  barangay = '';
 
-  // UI state
+  
   readonly showPassword = signal<boolean>(false);
   readonly isSubmitting = signal<boolean>(false);
 
-  // Validation errors
+  
   readonly errors = signal<Partial<Record<keyof AddAccountFormData, string>>>({});
 
   constructor() {
@@ -89,14 +89,14 @@ export class AddAccountModalComponent {
 
   onRoleChange(event: CustomEvent): void {
     const selectedRole = event.detail.value as UserRole;
-    this.role.set(selectedRole);
-    // Auto-fill position based on role
+    this.role = selectedRole;
+    
     if (selectedRole === 'SOLO PARENT') {
-      this.position.set('Solo Parent Applicant');
+      this.position = 'Solo Parent Applicant';
     } else if (selectedRole === 'ADMIN') {
-      this.position.set('LGU Social Welfare Officer');
+      this.position = 'LGU Social Welfare Officer';
     } else if (selectedRole === 'SUPERADMIN') {
-      this.position.set('Federation Head');
+      this.position = 'Federation Head';
     }
   }
 
@@ -107,18 +107,18 @@ export class AddAccountModalComponent {
   private validate(): boolean {
     const errs: Partial<Record<keyof AddAccountFormData, string>> = {};
 
-    if (!this.fullName().trim()) errs.name = 'Full name is required.';
-    if (!this.email().trim()) {
+    if (!this.fullName.trim()) errs.name = 'Full name is required.';
+    if (!this.email.trim()) {
       errs.email = 'Email address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email())) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
       errs.email = 'Enter a valid email address.';
     }
-    if (!this.password().trim()) {
+    if (!this.password.trim()) {
       errs.password = 'Password is required.';
-    } else if (this.password().length < 6) {
+    } else if (this.password.length < 6) {
       errs.password = 'Password must be at least 6 characters.';
     }
-    if (!this.role()) errs.role = 'Account role is required.';
+    if (!this.role) errs.role = 'Account role is required.';
 
     this.errors.set(errs);
     return Object.keys(errs).length === 0;
@@ -134,12 +134,12 @@ export class AddAccountModalComponent {
 
     const newUser: SystemUser = {
       id: Date.now(),
-      name: this.fullName().trim(),
-      email: this.email().trim(),
-      barangay: this.barangay().trim() || 'N/A',
-      role: this.role(),
+      name: this.fullName.trim(),
+      email: this.email.trim(),
+      barangay: this.barangay.trim() || 'N/A',
+      role: this.role,
       status: 'ACTIVE',
-      avatarChar: this.fullName().trim().charAt(0).toUpperCase()
+      avatarChar: this.fullName.trim().charAt(0).toUpperCase()
     };
 
     this.soloService.addSystemUser(newUser);

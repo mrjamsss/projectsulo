@@ -33,9 +33,9 @@
         <input
           class="form-input"
           type="text"
+          name="fullName"
           placeholder="e.g. Maria Santos"
-          [value]="fullName()"
-          (input)="fullName.set($any($event.target).value)"
+          [(ngModel)]="fullName"
         />
       </div>
       @if (errors()['name']) {
@@ -50,9 +50,9 @@
         <input
           class="form-input"
           type="email"
+          name="email"
           placeholder="e.g. maria@solo.com"
-          [value]="email()"
-          (input)="email.set($any($event.target).value)"
+          [(ngModel)]="email"
         />
       </div>
       @if (errors()['email']) {
@@ -67,9 +67,9 @@
         <input
           class="form-input"
           [type]="showPassword() ? 'text' : 'password'"
+          name="password"
           placeholder="Set account password (e.g. pass123)"
-          [value]="password()"
-          (input)="password.set($any($event.target).value)"
+          [(ngModel)]="password"
         />
         <button class="eye-btn" type="button" (click)="togglePasswordVisibility()">
           <ion-icon [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
@@ -91,9 +91,9 @@
           <input
             class="form-input"
             type="tel"
+            name="phone"
             placeholder="+63 917 000 0000"
-            [value]="phone()"
-            (input)="phone.set($any($event.target).value)"
+            [(ngModel)]="phone"
           />
         </div>
       </div>
@@ -105,7 +105,8 @@
           <ion-select
             class="form-select"
             interface="popover"
-            [value]="role()"
+            name="role"
+            [(ngModel)]="role"
             (ionChange)="onRoleChange($event)"
             placeholder="Select Role"
           >
@@ -129,9 +130,9 @@
           <input
             class="form-input"
             type="text"
+            name="position"
             placeholder="e.g. Solo Parent Applicant"
-            [value]="position()"
-            (input)="position.set($any($event.target).value)"
+            [(ngModel)]="position"
           />
         </div>
       </div>
@@ -143,9 +144,9 @@
           <input
             class="form-input"
             type="text"
+            name="barangay"
             placeholder="e.g. Zulueta / San Josef"
-            [value]="barangay()"
-            (input)="barangay.set($any($event.target).value)"
+            [(ngModel)]="barangay"
           />
         </div>
       </div>
