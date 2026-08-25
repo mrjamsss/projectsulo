@@ -12,7 +12,8 @@ export const routes: Routes = [
   },
   {
     path: 'add-account',
-    loadComponent: () => import('./pages/add-account/add-account.page').then( m => m.AddAccountPage)
+    redirectTo: 'user-management',
+    pathMatch: 'full',
   },
   {
     path: 'user-management',
