@@ -20,6 +20,7 @@ import {
   checkmarkCircleOutline
 } from 'ionicons/icons';
 import { SoloService } from '../../services/solo.service';
+import { ToastService } from '../../services/toast.service';
 import { SystemUser, UserRole } from '../../models/solo.models';
 
 export interface AddAccountFormData {
@@ -55,7 +56,7 @@ export class AddAccountModalComponent {
   readonly accountCreated = output<SystemUser>();
 
   private soloService = inject(SoloService);
-  private toastCtrl = inject(ToastController);
+  private toastService = inject(ToastService);
 
   // Form fields
   readonly fullName = signal<string>('');
@@ -146,13 +147,9 @@ export class AddAccountModalComponent {
     this.isSubmitting.set(false);
     this.accountCreated.emit(newUser);
 
-    const toast = await this.toastCtrl.create({
-      message: `Account for ${newUser.name} created successfully!`,
-      duration: 2500,
-      color: 'success',
-      position: 'top',
-      icon: 'checkmark-circle-outline'
-    });
-    await toast.present();
+    this.toastService.success(
+      `Account for ${newUser.name} created successfully!`,
+      'Account Created'
+    );
   }
 }
