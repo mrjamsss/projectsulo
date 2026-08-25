@@ -1,10 +1,32 @@
 @use "../theme/variables.scss" as *;
 
+ion-split-pane {
+  --side-width: 250px;
+  --side-min-width: 250px;
+  --side-max-width: 250px;
+}
+
 ion-menu {
-  --width: 280px;
+  --width: 250px;
+  --min-width: 250px;
+  --max-width: 250px;
+  max-width: 250px;
 
   ion-content {
-    --background: #083338;
+    --background: #003840;
+    --overflow: hidden;
+    color: #ffffff;
+
+    &::part(scroll) {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
   }
 }
 
@@ -15,84 +37,33 @@ ion-menu {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
 
-    .brand-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #0d9488, #14b8a6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4);
-
-      ion-icon {
-        font-size: 24px;
-        color: #ffffff;
-      }
+    .brand-logo-img {
+      height: 54px;
+      width: auto;
+      max-width: 60px;
+      object-fit: contain;
     }
 
     .brand-text {
-      h2 {
-        margin: 0;
-        font-size: 1.2rem;
-        font-weight: 800;
-        letter-spacing: -0.3px;
-        color: #ffffff;
-      }
-
-      p {
-        margin: 2px 0 0;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #99f6e4;
-      }
-    }
-  }
-
-  .user-profile-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #115e59;
-      border: 2px solid #2dd4bf;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-
-      .user-avatar-initial {
-        color: #ffffff;
-        font-weight: 800;
-        font-size: 1.1rem;
-      }
-    }
-
-    .user-info {
       display: flex;
       flex-direction: column;
       line-height: 1.0;
 
-      .user-name {
-        font-size: 0.9rem;
+      .brand-title {
+        font-family: $font-poppins;
+        font-size: 1.45rem;
         font-weight: 700;
         color: #ffffff;
+        letter-spacing: -0.3px;
       }
 
-      .user-role {
-        font-size: 0.75rem;
-        color: #99f6e4;
-        font-weight: 500;
+      .brand-subtitle {
+        font-family: $font-poppins;
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: #00c2a8;
+        letter-spacing: 0.5px;
       }
     }
   }
@@ -103,11 +74,12 @@ ion-list {
   background: transparent;
 
   ion-list-header {
+    font-family: $font-poppins;
     font-size: 0.72rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #5eead4;
+    letter-spacing: 1.2px;
+    color: #5aaab2;
     min-height: 28px;
     padding-left: 12px;
     margin-top: 12px;
@@ -120,39 +92,41 @@ ion-list {
     --min-height: 48px;
     --border-radius: 12px;
     --background: transparent;
-    margin-bottom: 4px;
-    font-weight: 600;
+    --color: #ffffff;
+    margin-bottom: 6px;
+    font-family: $font-hind;
+    font-weight: 500;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
     ion-icon {
-      font-size: 20px;
-      color: #99f6e4;
+      font-size: 22px;
+      color: #ffffff;
       margin-right: 14px;
       transition: transform 0.2s ease;
     }
 
     ion-label {
-      font-size: 0.92rem;
-      color: #ccfbf1;
+      font-family: $font-poppins;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
     }
 
     &:hover {
       --background: rgba(255, 255, 255, 0.08);
 
       ion-icon {
-        color: #ffffff;
         transform: translateX(2px);
       }
     }
 
     &.selected {
-      --background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      --background: #0d545c;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 
       ion-icon {
-        color: #5eead4;
+        color: #ffffff;
       }
 
       ion-label {
@@ -164,20 +138,89 @@ ion-list {
 }
 
 .sidebar-footer {
-  padding: 12px 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: #083338;
+  padding: 16px 14px 20px;
+  background: #003840;
 
-  .logout-btn {
-    --border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.88rem;
+  .user-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #09474f;
+    margin-bottom: 12px;
+
+    .user-avatar-initial {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      span {
+        font-family: $font-poppins;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #ffffff;
+      }
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .user-name {
+        font-family: $font-poppins;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #ffffff;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .user-role {
+        font-family: $font-hind;
+        font-size: 0.78rem;
+        color: #88c4ca;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .signout-btn {
+    --border-radius: 14px;
+    --background: rgba(239, 68, 68, 0.12);
+    --background-hover: rgba(239, 68, 68, 0.22);
+    --color: #fca5a5;
+    font-family: $font-poppins;
+    font-weight: 600;
+    font-size: 0.92rem;
     margin: 0;
-    color: #fda4af;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.25s ease-in-out;
 
     ion-icon {
       font-size: 20px;
-      color: #fda4af;
+      color: #fca5a5;
+      margin-right: 8px;
+      transition: color 0.25s ease;
+    }
+
+    &:hover {
+      --color: #ffffff;
+      border-color: rgba(239, 68, 68, 0.55);
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+
+      ion-icon {
+        color: #ffffff;
+      }
     }
   }
 }

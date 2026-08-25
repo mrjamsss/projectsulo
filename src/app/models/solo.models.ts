@@ -18,16 +18,23 @@ export interface ApplicationRecord {
   avatarChar: string;
   avatarColor: string;
   category: string;
+  contactNo?: string;
+  childrenCount?: number;
+  monthlyIncome?: string;
 }
 
 export interface AdminOnDuty {
   id: number;
   name: string;
+  email: string;
   role: string;
+  department: string;
+  contactNo: string;
   isOnline: boolean;
   statusText: string;
   avatarChar: string;
   shiftTime: string;
+  dateCreated?: string;
 }
 
 export interface AgendaItem {

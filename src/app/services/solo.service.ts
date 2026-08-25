@@ -63,6 +63,9 @@ export class SoloService {
       avatarChar: 'C',
       avatarColor: '#1e3a5f',
       category: 'Solo Parent Support',
+      contactNo: '0917-555-0104',
+      childrenCount: 2,
+      monthlyIncome: '₱12,000 / month',
     },
     {
       id: 2,
@@ -74,6 +77,9 @@ export class SoloService {
       avatarChar: 'E',
       avatarColor: '#0b4f4f',
       category: 'Educational Subsidy',
+      contactNo: '0918-555-0105',
+      childrenCount: 1,
+      monthlyIncome: '₱8,500 / month',
     },
     {
       id: 3,
@@ -85,6 +91,9 @@ export class SoloService {
       avatarChar: 'J',
       avatarColor: '#1b4d6b',
       category: 'Livelihood Assistance',
+      contactNo: '0919-555-0102',
+      childrenCount: 3,
+      monthlyIncome: '₱15,000 / month',
     },
     {
       id: 4,
@@ -96,6 +105,9 @@ export class SoloService {
       avatarChar: 'R',
       avatarColor: '#2d3748',
       category: 'Healthcare Access',
+      contactNo: '0920-555-0103',
+      childrenCount: 2,
+      monthlyIncome: '₱10,000 / month',
     },
     {
       id: 5,
@@ -107,36 +119,103 @@ export class SoloService {
       avatarChar: 'M',
       avatarColor: '#064e3b',
       category: 'Solo Parent ID Card',
+      contactNo: '0921-555-0101',
+      childrenCount: 1,
+      monthlyIncome: '₱18,000 / month',
     },
   ];
 
-  private readonly admins: AdminOnDuty[] = [
+  private admins: AdminOnDuty[] = [
     {
       id: 1,
       name: 'Admin Administrator',
+      email: 'admin@projectsolo.gov.ph',
       role: 'Federation Head',
+      department: 'Executive Office',
+      contactNo: '(044) 940-1234',
       isOnline: true,
       statusText: 'ONLINE NOW',
       avatarChar: 'A',
       shiftTime: '8:00 AM - 5:00 PM',
+      dateCreated: 'Jan 15, 2026',
     },
     {
       id: 2,
       name: 'Jane Doe',
+      email: 'jane.doe@cswdo.gov.ph',
       role: 'LGU Social Welfare Officer',
+      department: 'CSWDO / MSWDO',
+      contactNo: '(044) 940-5678',
       isOnline: true,
       statusText: 'ONLINE NOW',
       avatarChar: 'J',
       shiftTime: '9:00 AM - 4:00 PM',
+      dateCreated: 'Feb 01, 2026',
     },
     {
       id: 3,
       name: 'Mark Bautista',
+      email: 'mark.b@cswdo.gov.ph',
       role: 'Case Verifier',
+      department: 'Field Assessment Unit',
+      contactNo: '(044) 940-9012',
       isOnline: true,
       statusText: 'ONLINE NOW',
       avatarChar: 'M',
       shiftTime: '8:30 AM - 5:30 PM',
+      dateCreated: 'Feb 10, 2026',
+    },
+    {
+      id: 4,
+      name: 'Sarah Jenkins',
+      email: 'sarah.j@projectsolo.gov.ph',
+      role: 'Intake Coordinator',
+      department: 'Solo Parent Desk',
+      contactNo: '(044) 940-3456',
+      isOnline: false,
+      statusText: 'OFFLINE',
+      avatarChar: 'S',
+      shiftTime: '8:00 AM - 5:00 PM',
+      dateCreated: 'Mar 05, 2026',
+    },
+    {
+      id: 5,
+      name: 'Roberto Ramos',
+      email: 'roberto.r@projectsolo.gov.ph',
+      role: 'Barangay Focal Person',
+      department: 'San Josef Sur Liaison',
+      contactNo: '(044) 940-7890',
+      isOnline: false,
+      statusText: 'OFFLINE',
+      avatarChar: 'R',
+      shiftTime: '8:00 AM - 5:00 PM',
+      dateCreated: 'Mar 12, 2026',
+    },
+    {
+      id: 6,
+      name: 'Teresa Cruz',
+      email: 'teresa.c@projectsolo.gov.ph',
+      role: 'Benefits Administrator',
+      department: 'Social Assistance Unit',
+      contactNo: '(044) 940-2345',
+      isOnline: false,
+      statusText: 'OFFLINE',
+      avatarChar: 'T',
+      shiftTime: '9:00 AM - 6:00 PM',
+      dateCreated: 'Apr 02, 2026',
+    },
+    {
+      id: 7,
+      name: 'Michael Tan',
+      email: 'michael.t@projectsolo.gov.ph',
+      role: 'System Auditor',
+      department: 'IT & Data Verification',
+      contactNo: '(044) 940-6789',
+      isOnline: false,
+      statusText: 'OFFLINE',
+      avatarChar: 'M',
+      shiftTime: '8:00 AM - 5:00 PM',
+      dateCreated: 'May 18, 2026',
     },
   ];
 
@@ -201,6 +280,20 @@ export class SoloService {
 
   getAgendas(): AgendaItem[] {
     return [...this.agendas];
+  }
+
+  toggleUserOnlineStatus(userId: number): void {
+    this.admins = this.admins.map(user => {
+      if (user.id === userId) {
+        const nextOnline = !user.isOnline;
+        return {
+          ...user,
+          isOnline: nextOnline,
+          statusText: nextOnline ? 'ONLINE NOW' : 'OFFLINE',
+        };
+      }
+      return user;
+    });
   }
 
   addApplication(application: Omit<ApplicationRecord, 'id' | 'avatarChar' | 'avatarColor'>): void {

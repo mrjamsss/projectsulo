@@ -14,7 +14,6 @@ import {
   IonCol,
   IonCard,
   IonCardHeader,
-  IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
   IonList,
@@ -57,15 +56,25 @@ import {
   checkmarkCircleOutline,
   sparklesOutline,
   closeOutline,
+  closeCircleOutline,
   documentTextOutline,
   statsChartOutline,
   personOutline,
-  logOutOutline
+  logOutOutline,
+  mailOutline,
+  businessOutline,
+  callOutline,
+  pauseOutline,
+  playOutline,
+  locationOutline,
+  cashOutline
 } from 'ionicons/icons';
 import { SoloService } from '../../services/solo.service';
-import { ApplicationRecord, SystemUser } from '../../models/solo.models';
+import { ApplicationRecord, AdminOnDuty } from '../../models/solo.models';
 import { StatCardComponent } from '../../components/stat-card/stat-card.component';
 import { ApplicationCardComponent } from '../../components/application-card/application-card.component';
+import { UserDetailModalComponent } from '../../components/user-detail-modal/user-detail-modal.component';
+import { ApplicationDetailModalComponent } from '../../components/application-detail-modal/application-detail-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -86,7 +95,6 @@ import { ApplicationCardComponent } from '../../components/application-card/appl
     IonCol,
     IonCard,
     IonCardHeader,
-    IonCardTitle,
     IonCardSubtitle,
     IonCardContent,
     IonList,
@@ -102,7 +110,9 @@ import { ApplicationCardComponent } from '../../components/application-card/appl
     IonSegment,
     IonSegmentButton,
     StatCardComponent,
-    ApplicationCardComponent
+    ApplicationCardComponent,
+    UserDetailModalComponent,
+    ApplicationDetailModalComponent
   ],
 })
 export class DashboardPage implements OnInit {
@@ -115,18 +125,24 @@ export class DashboardPage implements OnInit {
   readonly userName = signal<string>('Admin Administrator');
   readonly userRole = signal<string>('Federation Head');
   readonly activeSegment = signal<'applications' | 'users'>('applications');
+
+  // Modal State Signals
   readonly selectedApplication = signal<ApplicationRecord | null>(null);
+  readonly isAppModalOpen = signal<boolean>(false);
+
+  readonly selectedUser = signal<AdminOnDuty | null>(null);
+  readonly isUserModalOpen = signal<boolean>(false);
 
   // State loaded from SoloService
   readonly stats = signal(this.soloService.getStats());
   readonly quickActions = signal(this.soloService.getQuickActions());
   readonly applications = signal(this.soloService.getApplications());
-  readonly systemUsers = signal<SystemUser[]>(this.soloService.getSystemUsers());
+  readonly admins = signal(this.soloService.getAdminsOnDuty());
   readonly agendas = signal(this.soloService.getAgendas());
 
   // Computed Signals for derived data (Unit 1.3)
   readonly totalApplicationsCount = computed(() => this.applications().length);
-  readonly onlineAdminsCount = computed(() => this.systemUsers().filter(u => u.status === 'ACTIVE').length);
+  readonly onlineAdminsCount = computed(() => this.admins().filter(a => a.isOnline).length);
   readonly interviewAgendas = computed(() => this.agendas().filter(a => a.category === 'INTERVIEW'));
   readonly dutyAdminAgendas = computed(() => this.agendas().filter(a => a.category === 'DUTY_ADMIN'));
   readonly announcementAgendas = computed(() => this.agendas().filter(a => a.category === 'ANNOUNCEMENT'));
@@ -158,19 +174,22 @@ export class DashboardPage implements OnInit {
       checkmarkCircleOutline,
       sparklesOutline,
       closeOutline,
+      closeCircleOutline,
       documentTextOutline,
       statsChartOutline,
       personOutline,
-      logOutOutline
+      logOutOutline,
+      mailOutline,
+      businessOutline,
+      callOutline,
+      pauseOutline,
+      playOutline,
+      locationOutline,
+      cashOutline
     });
   }
 
   ngOnInit(): void {}
-
-  /** Refresh system users every time the dashboard is navigated to */
-  ionViewWillEnter(): void {
-    this.systemUsers.set(this.soloService.getSystemUsers());
-  }
 
   onSegmentChange(event: CustomEvent): void {
     const value = event.detail.value as 'applications' | 'users';
@@ -181,9 +200,28 @@ export class DashboardPage implements OnInit {
 
   handleApplicationSelection(application: ApplicationRecord): void {
     this.selectedApplication.set(application);
+    this.isAppModalOpen.set(true);
   }
 
-  clearSelectedApplication(): void {
+  closeAppModal(): void {
+    this.isAppModalOpen.set(false);
     this.selectedApplication.set(null);
+  }
+
+  handleUserSelection(user: AdminOnDuty): void {
+    this.selectedUser.set(user);
+    this.isUserModalOpen.set(true);
+  }
+
+  closeUserModal(): void {
+    this.isUserModalOpen.set(false);
+    this.selectedUser.set(null);
+  }
+
+  handleUserStatusToggle(userId: number): void {
+    this.soloService.toggleUserOnlineStatus(userId);
+    this.admins.set(this.soloService.getAdminsOnDuty());
+    const updated = this.admins().find(u => u.id === userId) || null;
+    this.selectedUser.set(updated);
   }
 }

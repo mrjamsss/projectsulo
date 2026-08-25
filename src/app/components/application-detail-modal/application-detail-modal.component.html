@@ -1,0 +1,92 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onClose()" class="app-detail-modal" mode="ios">
+  <ng-template>
+    @if (application(); as app) {
+      <ion-header class="modal-header">
+        <ion-toolbar class="modal-toolbar">
+          <ion-title>Application Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="onClose()" fill="clear" color="light">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="modal-content-body">
+        <ion-grid class="modal-profile-hero ion-no-padding">
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-col size="auto" class="ion-text-center">
+              <ion-avatar class="modal-app-avatar">
+                <ion-text class="modal-avatar-char">{{ app.avatarChar }}</ion-text>
+              </ion-avatar>
+              <ion-text color="dark" class="modal-app-name">
+                <h2>{{ app.applicantName }}</h2>
+              </ion-text>
+              <ion-note class="modal-app-code">{{ app.appNo }} • {{ app.barangay }}</ion-note>
+
+              <ion-row class="ion-justify-content-center ion-margin-top">
+                <ion-badge [color]="getStatusColor(app.status)" class="modal-status-badge">
+                  {{ app.status }}
+                </ion-badge>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-list lines="full" class="app-info-list">
+          <ion-item>
+            <ion-icon slot="start" name="document-text-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Assistance Category</ion-note>
+              <ion-text color="dark"><p>{{ app.category }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon slot="start" name="location-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Registered Barangay</ion-note>
+              <ion-text color="dark"><p>{{ app.barangay }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+
+          @if (app.contactNo) {
+            <ion-item>
+              <ion-icon slot="start" name="call-outline" color="primary"></ion-icon>
+              <ion-label>
+                <ion-note>Contact Number</ion-note>
+                <ion-text color="dark"><p>{{ app.contactNo }}</p></ion-text>
+              </ion-label>
+            </ion-item>
+          }
+
+          @if (app.monthlyIncome) {
+            <ion-item>
+              <ion-icon slot="start" name="cash-outline" color="primary"></ion-icon>
+              <ion-label>
+                <ion-note>Declared Monthly Income</ion-note>
+                <ion-text color="dark"><p>{{ app.monthlyIncome }}</p></ion-text>
+              </ion-label>
+            </ion-item>
+          }
+
+          <ion-item>
+            <ion-icon slot="start" name="calendar-outline" color="primary"></ion-icon>
+            <ion-label>
+              <ion-note>Date Filed</ion-note>
+              <ion-text color="dark"><p>{{ app.date }}</p></ion-text>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer class="modal-footer ion-no-border">
+        <ion-toolbar class="modal-footer-toolbar">
+          <ion-button expand="block" color="primary" (click)="onClose()" class="modal-action-btn">
+            Close
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    }
+  </ng-template>
+</ion-modal>

@@ -37,3 +37,12 @@
   --ion-color-primary-shade: #0a3f3f;
   --ion-color-primary-tint: #245c5c;
 }
+
+/* Hide hamburger menu icon on desktop screens when split-pane is expanded */
+@media (min-width: 992px) {
+  ion-split-pane.split-pane-visible ion-menu-button,
+  ion-toolbar ion-menu-button,
+  .main-toolbar ion-menu-button {
+    display: none !important;
+  }
+}
