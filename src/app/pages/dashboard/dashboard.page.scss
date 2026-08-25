@@ -25,20 +25,6 @@
     display: inline-block;
     margin-right: 8px;
   }
-
-  .toolbar-sub-title {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #64748b;
-  }
-
-  .header-date-chip {
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-    --background: #f1f5f9;
-    --color: #0c4a4a;
-  }
 }
 
 // 1. Hero Banner Card
@@ -218,6 +204,9 @@
   --padding-end: 20px;
   --padding-top: 14px;
   --padding-bottom: 14px;
+  --background-hover: rgba(12, 74, 74, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
 
   .user-avatar-circle {
     width: 44px;
@@ -236,21 +225,46 @@
     }
   }
 
+  .user-item-grid {
+    width: 100%;
+  }
+
   .user-row-name {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: #0f172a;
     display: block;
+    margin-bottom: 2px;
   }
 
   .user-row-role {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #64748b;
+    font-weight: 600;
+  }
+
+  .user-dept-note {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    ion-icon {
+      font-size: 1rem;
+      color: #0c4a4a;
+    }
   }
 
   .status-chip {
     font-weight: 700;
     font-size: 0.75rem;
+  }
+
+  .arrow-icon {
+    font-size: 1.1rem;
+    margin-left: 8px;
   }
 }
 
@@ -307,6 +321,12 @@
       --padding-end: 18px;
       --padding-top: 10px;
       --padding-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        --background: rgba(12, 74, 74, 0.04);
+      }
 
       .duty-avatar-circle {
         width: 40px;
@@ -434,32 +454,6 @@
         color: #475569;
       }
     }
-  }
-}
-
-// Detail Preview Card
-.detail-preview-card {
-  border-radius: 16px;
-  border-left: 5px solid #0c4a4a;
-  background: #ffffff;
-  --background: #ffffff;
-
-  .detail-header {
-    padding: 12px 18px;
-    border-bottom: 1px solid #f1f5f9;
-
-    .detail-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #0c4a4a;
-    }
-  }
-
-  h3 {
-    margin: 4px 0 0;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #0f172a;
   }
 }
 
