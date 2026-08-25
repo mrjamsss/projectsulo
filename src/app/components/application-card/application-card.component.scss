@@ -1,0 +1,86 @@
+.application-item {
+  --background: #ffffff;
+  --color: #0f172a;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  --inner-padding-end: 0;
+  --background-hover: rgba(0, 77, 64, 0.04);
+  transition: all 0.2s ease;
+
+  .applicant-avatar {
+    width: 44px;
+    height: 44px;
+    background: #0f3e46;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+
+    .avatar-letter {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+  }
+
+  .applicant-grid {
+    width: 100%;
+  }
+
+  .applicant-label {
+    margin: 0;
+
+    .applicant-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .applicant-sub {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #64748b;
+      display: block;
+    }
+  }
+
+  .category-note {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    .cat-icon {
+      font-size: 1rem;
+      color: #0c4a4a;
+    }
+  }
+
+  .status-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    display: inline-block;
+  }
+
+  .application-date {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .arrow-icon {
+    font-size: 1.1rem;
+    margin-left: 8px;
+  }
+}

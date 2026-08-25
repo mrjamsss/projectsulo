@@ -1,7 +1,6 @@
 /*
  * App Global SCSS
  * ----------------------------------------------------------------------------
- * Project SOLO Global Stylesheet
  */
 
 @use "./theme/variables.scss" as *;
@@ -22,74 +21,19 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/* Ionic Dark Mode */
-@import '@ionic/angular/css/palettes/dark.system.css';
-
-/* Global Reset & Typography Baseline */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: $font-hind;
-  color: $color-text-dark;
-  background-color: $color-bg;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: $font-poppins;
-  margin: 0;
-}
-
-p {
-  margin: 0;
-}
-
-/* Explicit input styling to ensure readability */
-input, select, textarea {
-  color: $color-text-dark !important;
-  -webkit-text-fill-color: $color-text-dark !important;
-  background-color: $color-bg !important;
-
-  &::placeholder {
-    color: $color-text-disabled !important;
-    -webkit-text-fill-color: $color-text-disabled !important;
-    opacity: 1;
-  }
-}
-
-/* Mobile Safe Areas and Viewport Support */
+/* Explicit Light Theme styling */
 :root {
-  --ion-safe-area-top: env(safe-area-inset-top, 0px);
-  --ion-safe-area-bottom: env(safe-area-inset-bottom, 0px);
-  --ion-safe-area-left: env(safe-area-inset-left, 0px);
-  --ion-safe-area-right: env(safe-area-inset-right, 0px);
-  --ion-font-family: 'Hind', sans-serif;
-}
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15, 23, 42;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
 
-/* Keyframe Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Touch friendly scrolling */
-.touch-scroll {
-  -webkit-overflow-scrolling: touch;
+  --ion-color-primary: #0c4a4a;
+  --ion-color-primary-rgb: 12, 74, 74;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #0a3f3f;
+  --ion-color-primary-tint: #245c5c;
 }

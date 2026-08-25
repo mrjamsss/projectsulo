@@ -1,0 +1,45 @@
+<ion-card class="stat-card" mode="ios">
+  <ion-card-content class="stat-card-content">
+    <ion-grid class="stat-grid ion-no-padding">
+      <ion-row class="ion-align-items-center ion-justify-content-between">
+        <ion-col size="auto">
+          <ion-text color="medium" class="stat-heading-label">
+            {{ title() }}
+          </ion-text>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-badge [color]="iconColor()" class="stat-icon-badge">
+            <ion-icon [name]="icon()" aria-hidden="true"></ion-icon>
+          </ion-badge>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-baseline ion-margin-top">
+        <ion-col size="auto">
+          <ion-text color="dark" class="stat-number">
+            {{ value() }}
+          </ion-text>
+        </ion-col>
+        <ion-col size="auto" class="ion-margin-start">
+          @if (badgeType() === 'positive') {
+            <ion-text color="success" class="stat-subtext">
+              {{ changeText() }}
+            </ion-text>
+          } @else if (badgeType() === 'warning') {
+            <ion-text color="warning" class="stat-subtext">
+              {{ changeText() }}
+            </ion-text>
+          } @else if (badgeType() === 'info') {
+            <ion-text color="primary" class="stat-subtext">
+              {{ changeText() }}
+            </ion-text>
+          } @else {
+            <ion-text color="success" class="stat-subtext">
+              {{ changeText() }}
+            </ion-text>
+          }
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

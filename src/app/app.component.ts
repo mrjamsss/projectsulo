@@ -14,16 +14,28 @@ import {
   IonMenuToggle,
   IonRouterOutlet,
   IonFooter,
-  IonButton
+  IonButton,
+  IonText,
+  IonAvatar
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
+  grid,
   gridOutline,
   gridSharp,
-  peopleOutline,
-  peopleSharp,
+  personAdd,
+  personAddOutline,
+  personAddSharp,
+  logOut,
   logOutOutline,
-  logOutSharp
+  logOutSharp,
+  person,
+  personOutline,
+  personSharp,
+  people,
+  peopleOutline,
+  shieldCheckmark,
+  shieldCheckmarkOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -46,7 +58,9 @@ import {
     IonMenuToggle,
     IonRouterOutlet,
     IonFooter,
-    IonButton
+    IonButton,
+    IonText,
+    IonAvatar
   ],
 })
 export class AppComponent {
@@ -57,12 +71,22 @@ export class AppComponent {
 
   constructor() {
     addIcons({
+      grid,
       gridOutline,
       gridSharp,
-      peopleOutline,
-      peopleSharp,
+      personAdd,
+      personAddOutline,
+      personAddSharp,
+      logOut,
       logOutOutline,
-      logOutSharp
+      logOutSharp,
+      person,
+      personOutline,
+      personSharp,
+      people,
+      peopleOutline,
+      shieldCheckmark,
+      shieldCheckmarkOutline
     });
   }
 }

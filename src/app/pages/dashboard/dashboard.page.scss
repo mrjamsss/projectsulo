@@ -1,0 +1,472 @@
+// Dashboard Theme Styles - Project SOLO
+.dashboard-main-content {
+  --background: #f8fafc;
+  --padding-top: 16px;
+  --padding-bottom: 24px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.main-toolbar {
+  --background: #ffffff;
+  --color: #0f3e46;
+  --border-color: rgba(0, 0, 0, 0.08);
+
+  .toolbar-brand-title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #0c4a4a;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .toolbar-sub-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #64748b;
+  }
+
+  .header-date-chip {
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    --background: #f1f5f9;
+    --color: #0c4a4a;
+  }
+}
+
+// 1. Hero Banner Card
+.hero-banner-card {
+  margin: 0 0 16px 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #073b3e 0%, #0c4a4a 60%, #115e59 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 30px rgba(12, 74, 74, 0.25);
+  border: none;
+
+  .hero-card-content {
+    padding: 28px 24px;
+  }
+
+  .welcome-sub {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #99f6e4;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .welcome-heading h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+  }
+
+  .welcome-description {
+    font-size: 0.9rem;
+    color: #ccfbf1;
+    line-height: 1.5;
+    max-width: 650px;
+    display: block;
+  }
+
+  .hero-date-pill {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+  }
+}
+
+// 2. Quick Actions Bar
+.quick-actions-bar-card {
+  margin: 0 0 16px 0;
+  border-radius: 16px;
+  background: #ffffff;
+  --background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+  .quick-actions-content {
+    padding: 16px 20px;
+  }
+
+  .quick-actions-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .action-col {
+    padding: 4px;
+  }
+
+  .quick-action-btn {
+    --border-radius: 12px;
+    --border-color: #e2e8f0;
+    --color: #0f3e46;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.3px;
+    margin: 0;
+    text-transform: uppercase;
+
+    &:hover {
+      --background: rgba(12, 74, 74, 0.06);
+      --border-color: #0c4a4a;
+    }
+
+    ion-icon {
+      font-size: 1.1rem;
+      color: #0c4a4a;
+    }
+  }
+}
+
+// 3. Stat Cards Row
+.stat-cards-row {
+  margin-bottom: 16px;
+
+  .stat-col {
+    padding: 6px;
+  }
+}
+
+// 4. Maximized Records Table Card
+.table-section-row {
+  margin-bottom: 20px;
+
+  .records-card {
+    margin: 0;
+    width: 100%;
+    border-radius: 18px;
+    background: #ffffff;
+    --background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+
+    .records-card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .records-segment {
+      --background: #f1f5f9;
+      border-radius: 10px;
+      padding: 3px;
+
+      ion-segment-button {
+        --color: #64748b;
+        --color-checked: #0c4a4a;
+        --indicator-color: #ffffff;
+        --indicator-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        min-height: 38px;
+      }
+    }
+
+    .view-all-link-btn {
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      --color: #0c4a4a;
+    }
+
+    .applications-container-list,
+    .users-container-list {
+      background: #ffffff;
+      --background: #ffffff;
+      padding: 0;
+    }
+
+    .empty-state-row {
+      --background: #ffffff;
+      --padding-top: 30px;
+      --padding-bottom: 30px;
+    }
+  }
+}
+
+// System Users in Segment
+.system-user-row {
+  --background: #ffffff;
+  --color: #0f172a;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+
+  .user-avatar-circle {
+    width: 44px;
+    height: 44px;
+    background: #0f3e46;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 16px;
+
+    .user-avatar-char {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+  }
+
+  .user-row-name {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #0f172a;
+    display: block;
+  }
+
+  .user-row-role {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .status-chip {
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+}
+
+// 5. Secondary Widgets Row
+.widgets-section-row {
+  .sidebar-widget-card {
+    margin: 0;
+    border-radius: 18px;
+    background: #ffffff;
+    --background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+
+    .widget-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+
+      .widget-title-col {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .widget-icon {
+        font-size: 1.25rem;
+      }
+
+      .widget-title-text {
+        font-size: 0.88rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #1e293b;
+      }
+
+      .active-badge,
+      .today-badge {
+        font-weight: 700;
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 8px;
+      }
+    }
+
+    .admins-list {
+      background: #ffffff;
+      --background: #ffffff;
+      padding: 8px 0;
+    }
+
+    .admin-duty-entry {
+      --background: #ffffff;
+      --color: #0f172a;
+      --padding-start: 18px;
+      --padding-end: 18px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+
+      .duty-avatar-circle {
+        width: 40px;
+        height: 40px;
+        background: #e6fffa;
+        border: 1.5px solid #00bfa5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 12px;
+
+        .duty-avatar-text {
+          color: #00796b;
+          font-weight: 800;
+          font-size: 0.95rem;
+        }
+      }
+
+      .duty-info-label {
+        .duty-name-heading {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: #0f172a;
+          display: block;
+        }
+
+        .duty-role-note {
+          font-size: 0.75rem;
+          color: #64748b;
+          display: block;
+          margin-bottom: 2px;
+        }
+
+        .duty-online-status {
+          font-size: 0.72rem;
+          font-weight: 700;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+
+          ion-icon {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    .manage-privileges-item {
+      --background: #ffffff;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --padding-bottom: 16px;
+      --inner-padding-end: 0;
+
+      .manage-privileges-btn {
+        width: 100%;
+        --border-radius: 12px;
+        --border-color: #cbd5e1;
+        --color: #0f3e46;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  .agenda-widget-card {
+    .agenda-body {
+      padding: 8px 0 16px;
+      background: #ffffff;
+    }
+
+    .agenda-section-title-item {
+      --background: #ffffff;
+      --min-height: 32px;
+      --padding-start: 18px;
+      --padding-end: 18px;
+
+      ion-icon {
+        font-size: 1rem;
+        margin-right: 8px;
+      }
+
+      .agenda-section-heading {
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+      }
+    }
+
+    .agenda-row-item {
+      --background: #ffffff;
+      --color: #0f172a;
+      --padding-start: 18px;
+      --padding-end: 18px;
+      --padding-top: 8px;
+      --padding-bottom: 8px;
+      --min-height: 48px;
+
+      .agenda-item-name {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #0f172a;
+        display: block;
+      }
+
+      .agenda-item-desc {
+        font-size: 0.75rem;
+        color: #64748b;
+        display: block;
+      }
+
+      .agenda-time-pill {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 6px;
+      }
+
+      .agenda-time-text {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #475569;
+      }
+    }
+  }
+}
+
+// Detail Preview Card
+.detail-preview-card {
+  border-radius: 16px;
+  border-left: 5px solid #0c4a4a;
+  background: #ffffff;
+  --background: #ffffff;
+
+  .detail-header {
+    padding: 12px 18px;
+    border-bottom: 1px solid #f1f5f9;
+
+    .detail-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0c4a4a;
+    }
+  }
+
+  h3 {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner-card {
+    .welcome-heading h1 {
+      font-size: 1.5rem;
+    }
+  }
+}
