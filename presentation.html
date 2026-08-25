@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project SOLO — Interactive Presentation App</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --code-bg: #0b1120;
+      --code-border: #1e293b;
+      --tag-bg: #1e293b;
+      --highlight: #38bdf8;
+      --success: #10b981;
+      --success-light: #064e3b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 1.5rem;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Top Nav Bar */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      padding: 1.25rem 1.75rem;
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--primary), #0d9488);
+      color: white;
+      font-weight: 800;
+      font-size: 1.2rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.4);
+    }
+
+    .brand-titles h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    .brand-titles p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--card-border);
+    }
+    .btn-outline:hover {
+      background: var(--card-bg);
+      color: white;
+    }
+
+    /* Elevator Pitch Banner */
+    .pitch-banner {
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.25), rgba(30, 41, 59, 0.6));
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      padding: 1.25rem 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .pitch-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #2dd4bf;
+      margin-bottom: 0.5rem;
+    }
+
+    .pitch-text {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    /* Requirement Tabs Bar */
+    .tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.85rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .tab-btn ion-icon {
+      font-size: 1.3rem;
+    }
+
+    .tab-btn:hover {
+      border-color: #0d9488;
+      color: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), #0d9488);
+      color: white;
+      border-color: #2dd4bf;
+      box-shadow: 0 4px 15px rgba(13, 148, 136, 0.35);
+    }
+
+    /* Content Cards */
+    .content-panel {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .content-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .req-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      margin-bottom: 1.5rem;
+    }
+
+    .req-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1rem;
+    }
+
+    .req-title-wrap h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .concept-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-left: 4px solid var(--primary);
+      padding: 0.9rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+    }
+
+    .file-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .file-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #38bdf8;
+    }
+
+    /* Code Block Styling */
+    .code-wrapper {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 1rem 0 1.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .code-top-bar {
+      background: #111827;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f2937;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .copy-btn {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #cbd5e1;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover {
+      background: #374151;
+      color: white;
+    }
+
+    pre {
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .ln {
+      color: #475569;
+      user-select: none;
+      display: inline-block;
+      width: 35px;
+      text-align: right;
+      margin-right: 15px;
+    }
+    .kw { color: #f472b6; font-weight: 600; }
+    .fn { color: #60a5fa; }
+    .str { color: #34d399; }
+    .tag { color: #38bdf8; }
+    .attr { color: #fbbf24; }
+    .cmt { color: #64748b; font-style: italic; }
+
+    /* Presenter Script Box */
+    .speech-box {
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(15, 23, 42, 0.7));
+      border: 1px solid #059669;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      position: relative;
+    }
+
+    .speech-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #34d399;
+      margin-bottom: 0.5rem;
+    }
+
+    .speech-body {
+      font-size: 0.92rem;
+      color: #d1fae5;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+
+    .data-table th, .data-table td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--card-border);
+      text-align: left;
+    }
+
+    .data-table th {
+      background: #0f172a;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    .data-table tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 0.75rem; }
+      .top-header { flex-direction: column; gap: 1rem; text-align: center; }
+      .brand-section { flex-direction: column; }
+      .req-card { padding: 1.25rem; }
+      .tabs-nav { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="brand-section">
+        <div class="logo-badge">SOLO</div>
+        <div class="brand-titles">
+          <h1>Project SOLO — Defense & Presentation Guide</h1>
+          <p>Angular 17+ Standalone Architecture & Ionic 7 Evaluation</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="window.print()">
+          <ion-icon name="print-outline"></ion-icon> Print / PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Elevator Pitch -->
+    <div class="pitch-banner">
+      <div class="pitch-tag">
+        <ion-icon name="flash"></ion-icon> 30-Second Presenter Elevator Pitch
+      </div>
+      <p class="pitch-text">
+        "Good day! Our system, <strong>Project SOLO</strong>, is an Angular and Ionic web application designed to digitize application reviews, scheduling, and user management for Solo Parents under RA 11861.
+        We structured our business logic and local storage persistence in <strong>SoloService</strong>, implemented smooth client-side navigation using <strong>lazy-loaded Angular routes</strong>, and modularized our UI into <strong>reusable components</strong> such as <code>StatCardComponent</code> and <code>ApplicationCardComponent</code>.
+        We utilized all four <strong>Angular bindings</strong>—including <strong>Two-Way Form Binding <code>[(ngModel)]</code></strong>—alongside modern <strong><code>@for</code> and <code>@if</code> control flow</strong> for fast rendering. Finally, the interface is <strong>fully responsive for mobile and desktop</strong> using an adaptive split-pane layout and touch-optimized Ionic components."
+      </p>
+    </div>
+
+    <!-- Interactive Navigation Tabs -->
+    <nav class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-service', this)">
+        <ion-icon name="server-outline"></ion-icon>
+        <span>1. Service</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-routing', this)">
+        <ion-icon name="navigate-outline"></ion-icon>
+        <span>2. Routing</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-components', this)">
+        <ion-icon name="cube-outline"></ion-icon>
+        <span>3. Components</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-binding', this)">
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+        <span>4. Binding</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-control', this)">
+        <ion-icon name="code-working-outline"></ion-icon>
+        <span>5. @for & @if</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-uiux', this)">
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+        <span>6. UI/UX Mobile</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: SERVICE -->
+    <div id="tab-service" class="content-panel active">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="server-outline" style="color:#2dd4bf;"></ion-icon> 1. Service (Data & Functionality)</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> A Service provides centralized data and business logic to the application so components don't have to manage raw data or duplicate logic.
+        </div>
+
+        <div class="file-badge-row">
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/services/solo.service.ts</span>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>solo.service.ts — Lines 5-8 & 370-415</span>
+            <button class="copy-btn" onclick="copyCode('code-service')">Copy Code</button>
+          </div>
+          <pre id="code-service"><code><span class="ln">5</span><span class="kw">@Injectable</span>({
+<span class="ln">6</span>  providedIn: <span class="str">'root'</span>,
+<span class="ln">7</span>})
+<span class="ln">8</span><span class="kw">export class</span> <span class="fn">SoloService</span> {
+<span class="ln">...</span>
+<span class="ln">370</span>  <span class="fn">getSystemUsers</span>(): SystemUser[] {
+<span class="ln">371</span>    <span class="kw">return</span> [...<span class="kw">this</span>.systemUsers];
+<span class="ln">372</span>  }
+<span class="ln">...</span>
+<span class="ln">378</span>  <span class="fn">addSystemUser</span>(user: SystemUser): <span class="kw">void</span> {
+<span class="ln">379</span>    <span class="kw">this</span>.systemUsers = [user, ...<span class="kw">this</span>.systemUsers];
+<span class="ln">380</span>    <span class="kw">this</span>.<span class="fn">saveSystemUsers</span>(); <span class="cmt">// Saves to localStorage</span>
+<span class="ln">381</span>  }
+<span class="ln">...</span>
+<span class="ln">403</span>  <span class="fn">toggleSystemUserStatus</span>(userId: <span class="kw">number</span>): SystemUser | <span class="kw">null</span> {
+<span class="ln">404</span>    <span class="kw">let</span> updatedUser: SystemUser | <span class="kw">null</span> = <span class="kw">null</span>;
+<span class="ln">405</span>    <span class="kw">this</span>.systemUsers = <span class="kw">this</span>.systemUsers.<span class="fn">map</span>(user => {
+<span class="ln">406</span>      <span class="kw">if</span> (user.id === userId) {
+<span class="ln">407</span>        <span class="kw">const</span> nextStatus: UserStatus = user.status === <span class="str">'ACTIVE'</span> ? <span class="str">'INACTIVE'</span> : <span class="str">'ACTIVE'</span>;
+<span class="ln">408</span>        updatedUser = { ...user, status: nextStatus };
+<span class="ln">409</span>        <span class="kw">return</span> updatedUser;
+<span class="ln">410</span>      }
+<span class="ln">411</span>      <span class="kw">return</span> user;
+<span class="ln">412</span>    });
+<span class="ln">413</span>    <span class="kw">this</span>.<span class="fn">saveSystemUsers</span>();
+<span class="ln">414</span>    <span class="kw">return</span> updatedUser;
+<span class="ln">415</span>  }
+<span class="ln">416</span>}</code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "We created <code>SoloService</code> as our centralized data store. Lines 5–8 use <code>@Injectable({ providedIn: 'root' })</code> to make it accessible everywhere. In lines 378–381, <code>addSystemUser()</code> saves newly created users, and line 403 <code>toggleSystemUserStatus()</code> updates user statuses and saves them to <code>localStorage</code> so data persists across refreshes."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ROUTING -->
+    <div id="tab-routing" class="content-panel">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="navigate-outline" style="color:#38bdf8;"></ion-icon> 2. Routing / routerLink (Navigation)</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> Routing allows single-page navigation without reloading the browser. We use lazy-loading (<code>loadComponent</code>) so each page only loads when visited.
+        </div>
+
+        <div class="file-badge-row">
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/app.routes.ts</span>
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/app.component.html</span>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/app.routes.ts — Lines 3-21</span>
+            <button class="copy-btn" onclick="copyCode('code-routes')">Copy Code</button>
+          </div>
+          <pre id="code-routes"><code><span class="ln">3</span><span class="kw">export const</span> routes: Routes = [
+<span class="ln">4</span>  {
+<span class="ln">5</span>    path: <span class="str">''</span>,
+<span class="ln">6</span>    redirectTo: <span class="str">'dashboard'</span>,
+<span class="ln">7</span>    pathMatch: <span class="str">'full'</span>,
+<span class="ln">8</span>  },
+<span class="ln">9</span>  {
+<span class="ln">10</span>    path: <span class="str">'dashboard'</span>,
+<span class="ln">11</span>    loadComponent: () => <span class="kw">import</span>(<span class="str">'./pages/dashboard/dashboard.page'</span>).<span class="fn">then</span>(m => m.DashboardPage)
+<span class="ln">12</span>  },
+<span class="ln">18</span>  {
+<span class="ln">19</span>    path: <span class="str">'user-management'</span>,
+<span class="ln">20</span>    loadComponent: () => <span class="kw">import</span>(<span class="str">'./pages/user-management/user-management.page'</span>).<span class="fn">then</span>(m => m.UserManagementPage)
+<span class="ln">21</span>  },
+<span class="ln">22</span>];</code></pre>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/app.component.html — Lines 18-23</span>
+            <button class="copy-btn" onclick="copyCode('code-routerlink')">Copy Code</button>
+          </div>
+          <pre id="code-routerlink"><code><span class="ln">18</span><span class="tag">&lt;ion-menu-toggle</span> <span class="attr">auto-hide</span>=<span class="str">"false"</span> <span class="attr">*ngFor</span>=<span class="str">"let p of appPages"</span><span class="tag">&gt;</span>
+<span class="ln">19</span>  <span class="tag">&lt;ion-item</span> <span class="attr">routerDirection</span>=<span class="str">"root"</span> <span class="attr">[routerLink]</span>=<span class="str">"[p.url]"</span> <span class="attr">lines</span>=<span class="str">"none"</span> <span class="attr">detail</span>=<span class="str">"false"</span> <span class="attr">routerLinkActive</span>=<span class="str">"selected"</span><span class="tag">&gt;</span>
+<span class="ln">20</span>    <span class="tag">&lt;ion-icon</span> <span class="attr">aria-hidden</span>=<span class="str">"true"</span> <span class="attr">slot</span>=<span class="str">"start"</span> <span class="attr">[name]</span>=<span class="str">"p.icon + '-outline'"</span><span class="tag">&gt;&lt;/ion-icon&gt;</span>
+<span class="ln">21</span>    <span class="tag">&lt;ion-label&gt;</span>{{ p.title }}<span class="tag">&lt;/ion-label&gt;</span>
+<span class="ln">22</span>  <span class="tag">&lt;/ion-item&gt;</span>
+<span class="ln">23</span><span class="tag">&lt;/ion-menu-toggle&gt;</span></code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "In <code>app.routes.ts</code> (lines 9–21), we configured routes with <code>loadComponent</code> for lazy loading to improve performance. In <code>app.component.html</code> (line 19), <code>[routerLink]</code> binds navigation to sidebar links, and <code>routerLinkActive='selected'</code> automatically highlights the currently active page."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: COMPONENTS -->
+    <div id="tab-components" class="content-panel">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="cube-outline" style="color:#fbbf24;"></ion-icon> 3. Reusable Components</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> A Reusable Component is a self-contained UI element that accepts custom inputs and can be reused multiple times across the application.
+        </div>
+
+        <div class="file-badge-row">
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/components/stat-card/stat-card.component.ts</span>
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/pages/dashboard/dashboard.page.html</span>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/components/stat-card/stat-card.component.ts — Lines 26-33</span>
+            <button class="copy-btn" onclick="copyCode('code-statcard')">Copy Code</button>
+          </div>
+          <pre id="code-statcard"><code><span class="ln">26</span><span class="kw">export class</span> <span class="fn">StatCardComponent</span> {
+<span class="ln">27</span>  <span class="kw">readonly</span> title = <span class="fn">input.required</span>&lt;<span class="kw">string</span>&gt;();
+<span class="ln">28</span>  <span class="kw">readonly</span> value = <span class="fn">input.required</span>&lt;<span class="kw">number</span>&gt;();
+<span class="ln">29</span>  <span class="kw">readonly</span> changeText = <span class="fn">input</span>&lt;<span class="kw">string</span>&gt;(<span class="str">''</span>);
+<span class="ln">30</span>  <span class="kw">readonly</span> icon = <span class="fn">input</span>&lt;<span class="kw">string</span>&gt;(<span class="str">'stats-chart-outline'</span>);
+<span class="ln">31</span>  <span class="kw">readonly</span> iconColor = <span class="fn">input</span>&lt;<span class="kw">string</span>&gt;(<span class="str">'primary'</span>);
+<span class="ln">32</span>  <span class="kw">readonly</span> badgeType = <span class="fn">input</span>&lt;<span class="str">'positive'</span> | <span class="str">'warning'</span> | <span class="str">'info'</span> | <span class="str">'success'</span>&gt;(<span class="str">'positive'</span>);
+<span class="ln">33</span>}</code></pre>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/pages/dashboard/dashboard.page.html — Lines 78-89 (Reused 4 times)</span>
+            <button class="copy-btn" onclick="copyCode('code-reuse')">Copy Code</button>
+          </div>
+          <pre id="code-reuse"><code><span class="ln">78</span>@for (stat of stats(); track stat.id) {
+<span class="ln">79</span>  <span class="tag">&lt;ion-col</span> <span class="attr">size</span>=<span class="str">"12"</span> <span class="attr">size-sm</span>=<span class="str">"6"</span> <span class="attr">size-lg</span>=<span class="str">"3"</span> <span class="attr">class</span>=<span class="str">"stat-col"</span><span class="tag">&gt;</span>
+<span class="ln">80</span>    <span class="tag">&lt;app-stat-card</span>
+<span class="ln">81</span>      <span class="attr">[title]</span>=<span class="str">"stat.title"</span>
+<span class="ln">82</span>      <span class="attr">[value]</span>=<span class="str">"stat.value"</span>
+<span class="ln">83</span>      <span class="attr">[changeText]</span>=<span class="str">"stat.changeText"</span>
+<span class="ln">84</span>      <span class="attr">[icon]</span>=<span class="str">"stat.icon"</span>
+<span class="ln">85</span>      <span class="attr">[iconColor]</span>=<span class="str">"stat.iconColor"</span>
+<span class="ln">86</span>      <span class="attr">[badgeType]</span>=<span class="str">"stat.badgeType"</span>
+<span class="ln">87</span>    <span class="tag">&gt;&lt;/app-stat-card&gt;</span>
+<span class="ln">88</span>  <span class="tag">&lt;/ion-col&gt;</span>
+<span class="ln">89</span>}</code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "Instead of copying card HTML 4 times, we created <code>StatCardComponent</code>. In lines 27–32, it accepts dynamic input signals (<code>title</code>, <code>value</code>, <code>badgeType</code>). In <code>dashboard.page.html</code> (lines 80–87), we reuse <code>&lt;app-stat-card&gt;</code> to render all 4 metric cards dynamically."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BINDING -->
+    <div id="tab-binding" class="content-panel">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="swap-horizontal-outline" style="color:#a78bfa;"></ion-icon> 4. Angular Binding (All 4 Types Demonstrated)</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> Angular Binding links data between TypeScript logic and the HTML view. Our implementation demonstrates Interpolation, Property Binding, Event Binding, and Two-Way Form Binding (<code>[(ngModel)]</code>).
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Binding Type</th>
+              <th>Syntax</th>
+              <th>Exact Line of Code</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Interpolation</strong></td>
+              <td><code>{{ }}</code></td>
+              <td><code>27: &lt;h1&gt;{{ userName() }}&lt;/h1&gt;</code><br><code>48: &lt;ion-note&gt;{{ totalUsersCount() }} users&lt;/ion-note&gt;</code></td>
+              <td>dashboard.page.html:27<br>user-management.page.html:48</td>
+            </tr>
+            <tr>
+              <td><strong>2. Property Binding</strong></td>
+              <td><code>[property]="value"</code></td>
+              <td><code>38: [class.role-card--active]="activeRoleFilter() === 'ALL'"</code><br><code>204: [user]="selectedUser()"</code><br><code>205: [isOpen]="showViewModal()"</code></td>
+              <td>user-management.page.html:38<br>user-management.page.html:204-205</td>
+            </tr>
+            <tr>
+              <td><strong>3. Event Binding</strong></td>
+              <td><code>(event)="handler()"</code></td>
+              <td><code>25: &lt;ion-button (click)="openAddModal()"&gt;</code><br><code>105: &lt;ion-searchbar (ionInput)="onSearchChange($event)"&gt;</code><br><code>132: (selected)="handleApplicationSelection($event)"</code></td>
+              <td>user-management.page.html:25<br>user-management.page.html:105<br>dashboard.page.html:132</td>
+            </tr>
+            <tr>
+              <td><strong>4. Two-Way Form Binding</strong></td>
+              <td><code>[(ngModel)]="field"</code></td>
+              <td><code>38: [(ngModel)]="fullName"</code><br><code>55: [(ngModel)]="email"</code><br><code>72: [(ngModel)]="password"</code></td>
+              <td>add-account-modal.component.html:38, 55, 72</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/components/add-account-modal/add-account-modal.component.html — Lines 33-58</span>
+            <button class="copy-btn" onclick="copyCode('code-formbind')">Copy Code</button>
+          </div>
+          <pre id="code-formbind"><code><span class="ln">33</span><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"input-wrap"</span> <span class="attr">[class.input-wrap--error]</span>=<span class="str">"errors()['name']"</span><span class="tag">&gt;</span>
+<span class="ln">34</span>  <span class="tag">&lt;input</span>
+<span class="ln">35</span>    <span class="attr">class</span>=<span class="str">"form-input"</span>
+<span class="ln">36</span>    <span class="attr">type</span>=<span class="str">"text"</span>
+<span class="ln">37</span>    <span class="attr">name</span>=<span class="str">"fullName"</span>
+<span class="ln">38</span>    <span class="attr">[(ngModel)]</span>=<span class="str">"fullName"</span>
+<span class="ln">39</span>  <span class="tag">/&gt;</span>
+<span class="ln">40</span><span class="tag">&lt;/div&gt;</span></code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "We implemented all 4 binding types: Interpolation <code>{{ }}</code> displays dynamic text; Property binding <code>[]</code> passes state and dynamic CSS classes; Event binding <code>()</code> triggers functions on clicks and search inputs; and Two-Way Form binding <code>[(ngModel)]</code> synchronizes input fields reactively with component variables in our Add Account modal."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: CONTROL FLOW -->
+    <div id="tab-control" class="content-panel">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="code-working-outline" style="color:#ec4899;"></ion-icon> 5. Control Flow: @for and @if</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> Angular 17+ native control flow replaces <code>*ngFor</code> and <code>*ngIf</code> with cleaner, faster <code>@for</code> and <code>@if</code> blocks with built-in empty state handling.
+        </div>
+
+        <div class="file-badge-row">
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/pages/user-management/user-management.page.html</span>
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/pages/dashboard/dashboard.page.html</span>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/pages/user-management/user-management.page.html — Lines 139-184</span>
+            <button class="copy-btn" onclick="copyCode('code-for')">Copy Code</button>
+          </div>
+          <pre id="code-for"><code><span class="ln">139</span>@for (user of filteredUsers(); track user.id) {
+<span class="ln">140</span>  <span class="tag">&lt;ion-item</span> <span class="attr">button</span> <span class="attr">(click)</span>=<span class="str">"openViewUserModal(user)"</span> <span class="attr">class</span>=<span class="str">"um-user-row"</span> <span class="attr">lines</span>=<span class="str">"full"</span> <span class="attr">detail</span>=<span class="str">"false"</span><span class="tag">&gt;</span>
+<span class="ln">141</span>    <span class="tag">&lt;ion-avatar</span> <span class="attr">slot</span>=<span class="str">"start"</span> <span class="attr">class</span>=<span class="str">"um-user-avatar"</span><span class="tag">&gt;</span>
+<span class="ln">142</span>      <span class="tag">&lt;ion-text</span> <span class="attr">class</span>=<span class="str">"um-avatar-char"</span><span class="tag">&gt;</span>{{ user.avatarChar }}<span class="tag">&lt;/ion-text&gt;</span>
+<span class="ln">143</span>    <span class="tag">&lt;/ion-avatar&gt;</span>
+<span class="ln">144</span>    <span class="tag">&lt;ion-label</span> <span class="attr">class</span>=<span class="str">"um-user-label"</span><span class="tag">&gt;</span>
+<span class="ln">145</span>      <span class="tag">&lt;ion-text</span> <span class="attr">class</span>=<span class="str">"um-user-name"</span><span class="tag">&gt;</span>{{ user.name }}<span class="tag">&lt;/ion-text&gt;</span>
+<span class="ln">146</span>      <span class="tag">&lt;ion-note</span> <span class="attr">class</span>=<span class="str">"um-user-email"</span><span class="tag">&gt;</span>{{ user.email }}<span class="tag">&lt;/ion-note&gt;</span>
+<span class="ln">147</span>    <span class="tag">&lt;/ion-label&gt;</span>
+<span class="ln">148</span>  <span class="tag">&lt;/ion-item&gt;</span>
+<span class="ln">177</span>} @empty {
+<span class="ln">178</span>  <span class="tag">&lt;ion-item</span> <span class="attr">lines</span>=<span class="str">"none"</span> <span class="attr">class</span>=<span class="str">"um-empty-state"</span><span class="tag">&gt;</span>
+<span class="ln">179</span>    <span class="tag">&lt;ion-label</span> <span class="attr">class</span>=<span class="str">"ion-text-center"</span><span class="tag">&gt;</span>
+<span class="ln">180</span>      <span class="tag">&lt;ion-icon</span> <span class="attr">name</span>=<span class="str">"people-outline"</span> <span class="attr">class</span>=<span class="str">"empty-icon"</span><span class="tag">&gt;&lt;/ion-icon&gt;</span>
+<span class="ln">181</span>      <span class="tag">&lt;p&gt;</span>No users found matching your filters.<span class="tag">&lt;/p&gt;</span>
+<span class="ln">182</span>    <span class="tag">&lt;/ion-label&gt;</span>
+<span class="ln">183</span>  <span class="tag">&lt;/ion-item&gt;</span>
+<span class="ln">184</span>}</code></pre>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/pages/dashboard/dashboard.page.html — Lines 127-143</span>
+            <button class="copy-btn" onclick="copyCode('code-if')">Copy Code</button>
+          </div>
+          <pre id="code-if"><code><span class="ln">127</span>@if (activeSegment() === 'applications') {
+<span class="ln">128</span>  <span class="tag">&lt;ion-list</span> <span class="attr">lines</span>=<span class="str">"full"</span> <span class="attr">class</span>=<span class="str">"applications-container-list"</span><span class="tag">&gt;</span>
+<span class="ln">129</span>    @for (app of applications(); track app.id) {
+<span class="ln">130</span>      <span class="tag">&lt;app-application-card</span> <span class="attr">[application]</span>=<span class="str">"app"</span> <span class="attr">(selected)</span>=<span class="str">"handleApplicationSelection($event)"</span><span class="tag">&gt;&lt;/app-application-card&gt;</span>
+<span class="ln">131</span>    }
+<span class="ln">132</span>  <span class="tag">&lt;/ion-list&gt;</span>
+<span class="ln">142</span>} @else {
+<span class="ln">143</span>  <span class="tag">&lt;ion-list</span> <span class="attr">lines</span>=<span class="str">"full"</span> <span class="attr">class</span>=<span class="str">"users-container-list"</span><span class="tag">&gt;</span>
+<span class="ln">144</span>    @for (admin of admins(); track admin.id) {
+<span class="ln">145</span>      <span class="tag">&lt;ion-item</span> <span class="attr">button</span> <span class="attr">(click)</span>=<span class="str">"handleUserSelection(admin)"</span><span class="tag">&gt;</span> ... <span class="tag">&lt;/ion-item&gt;</span>
+<span class="ln">146</span>    }
+<span class="ln">183</span>  <span class="tag">&lt;/ion-list&gt;</span>
+<span class="ln">184</span>}</code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "In <code>user-management.page.html</code> (line 139), <code>@for (...; track user.id)</code> efficiently loops through users, and line 177 <code>@empty</code> automatically displays a message if no users match the filter. In <code>dashboard.page.html</code> (line 127), <code>@if ... @else</code> conditionally switches between the Applications tab and the System Users tab."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: UI/UX -->
+    <div id="tab-uiux" class="content-panel">
+      <div class="req-card">
+        <div class="req-header">
+          <div class="req-title-wrap">
+            <h2><ion-icon name="phone-portrait-outline" style="color:#06b6d4;"></ion-icon> 6. UI/UX & Mobile Adaptation</h2>
+          </div>
+        </div>
+
+        <div class="concept-box">
+          <strong>Concept:</strong> The layout automatically adapts between smartphone screens and desktop monitors using Ionic's split-pane, responsive grid, and touch-friendly controls.
+        </div>
+
+        <div class="file-badge-row">
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/app.component.html</span>
+          <span class="file-badge"><ion-icon name="document-text-outline"></ion-icon> src/app/pages/dashboard/dashboard.page.html</span>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/app.component.html — Lines 1-3 (Adaptive Split Pane)</span>
+            <button class="copy-btn" onclick="copyCode('code-splitpane')">Copy Code</button>
+          </div>
+          <pre id="code-splitpane"><code><span class="ln">1</span><span class="tag">&lt;ion-app&gt;</span>
+<span class="ln">2</span>  <span class="tag">&lt;ion-split-pane</span> <span class="attr">contentId</span>=<span class="str">"main-content"</span><span class="tag">&gt;</span>
+<span class="ln">3</span>    <span class="tag">&lt;ion-menu</span> <span class="attr">contentId</span>=<span class="str">"main-content"</span> <span class="attr">type</span>=<span class="str">"overlay"</span><span class="tag">&gt;</span></code></pre>
+        </div>
+
+        <div class="code-wrapper">
+          <div class="code-top-bar">
+            <span>src/app/pages/dashboard/dashboard.page.html — Line 79 (Responsive Breakpoints)</span>
+            <button class="copy-btn" onclick="copyCode('code-grid')">Copy Code</button>
+          </div>
+          <pre id="code-grid"><code><span class="ln">79</span><span class="tag">&lt;ion-col</span> <span class="attr">size</span>=<span class="str">"12"</span> <span class="attr">size-sm</span>=<span class="str">"6"</span> <span class="attr">size-lg</span>=<span class="str">"3"</span> <span class="attr">class</span>=<span class="str">"stat-col"</span><span class="tag">&gt;</span></code></pre>
+        </div>
+
+        <div class="speech-box">
+          <div class="speech-header"><ion-icon name="mic-outline"></ion-icon> What to say in presentation:</div>
+          <div class="speech-body">
+            "For UI/UX, we used Ionic's <code>ion-split-pane</code> in <code>app.component.html</code> (line 2), which collapses into a touch drawer on mobile and locks as a sidebar on desktop. In <code>dashboard.page.html</code> (line 79), <code>ion-col</code> uses responsive breakpoints (<code>size='12'</code>, <code>size-sm='6'</code>, <code>size-lg='3'</code>) so cards stack on mobile and spread out on desktop."
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.content-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+      el.classList.add('active');
+    }
+
+    function copyCode(id) {
+      const code = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Code snippet copied to clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>
