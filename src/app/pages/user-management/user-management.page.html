@@ -5,7 +5,6 @@
     </ion-buttons>
     <ion-title>
       <ion-text class="toolbar-brand-title">Project SOLO</ion-text>
-      <ion-note class="toolbar-sub-title">Republic Act 11861 Portal</ion-note>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,17 +21,10 @@
         </ion-note>
       </ion-col>
       <ion-col size="12" size-md="5" class="um-header-actions">
-        <!-- Permission Requests -->
-        <ion-button fill="clear" class="perm-requests-btn">
-          <ion-icon slot="start" name="notifications-outline"></ion-icon>
-          <ion-text>Permission Requests</ion-text>
-          <ion-badge class="perm-badge" slot="end">{{ permissionRequestsCount() }}</ion-badge>
-        </ion-button>
-
         <!-- Add Account Button -->
-        <ion-button (click)="openAddModal()" class="add-account-btn" shape="round">
+        <ion-button (click)="openAddModal()" fill="solid" class="add-account-btn" shape="round" expand="block">
           <ion-icon slot="start" name="person-add-outline"></ion-icon>
-          Add Account
+          <ion-text>ADD ACCOUNT</ion-text>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -145,7 +137,7 @@
 
             <ion-list lines="full" class="um-user-list">
               @for (user of filteredUsers(); track user.id) {
-                <ion-item class="um-user-row" lines="full">
+                <ion-item button (click)="openViewUserModal(user)" class="um-user-row" lines="full" detail="false">
                   <!-- Avatar -->
                   <ion-avatar slot="start" class="um-user-avatar">
                     <ion-text class="um-avatar-char">{{ user.avatarChar }}</ion-text>
@@ -154,7 +146,8 @@
                   <!-- Name + Email + Barangay -->
                   <ion-label class="um-user-label">
                     <ion-text class="um-user-name">{{ user.name }}</ion-text>
-                    <ion-note class="um-user-meta">{{ user.email }} • {{ user.barangay }}</ion-note>
+                    <ion-note class="um-user-email">{{ user.email }}</ion-note>
+                    <ion-note class="um-user-location">{{ user.barangay }}</ion-note>
                   </ion-label>
 
                   <!-- Role Badge + Status Chip + View -->
@@ -175,7 +168,7 @@
                       <ion-label>{{ user.status }}</ion-label>
                     </ion-chip>
 
-                    <button class="view-btn" type="button" aria-label="View user details">
+                    <button class="view-btn" type="button" aria-label="View user details" (click)="openViewUserModal(user); $event.stopPropagation()">
                       <ion-icon name="eye-outline"></ion-icon>
                       <span class="view-btn-text">VIEW</span>
                     </button>
@@ -205,3 +198,11 @@
     (accountCreated)="onAccountCreated($event)"
   ></app-add-account-modal>
 }
+
+<!-- Standalone Reusable View Account Modal Component -->
+<app-view-account-modal
+  [user]="selectedUser()"
+  [isOpen]="showViewModal()"
+  (closeModal)="closeViewUserModal()"
+  (toggleStatus)="handleToggleStatus($event)"
+></app-view-account-modal>

@@ -1,0 +1,23 @@
+@if (toast(); as t) {
+  <div class="toast-wrapper" [ngClass]="'toast--' + t.type" role="alert" aria-live="assertive">
+    <div class="toast-container">
+      <div class="toast-icon-wrap">
+        <ion-icon [name]="getIconName(t.type)"></ion-icon>
+      </div>
+
+      <div class="toast-content">
+        @if (t.title) {
+          <h4 class="toast-title">{{ t.title }}</h4>
+        }
+        <p class="toast-message">{{ t.message }}</p>
+      </div>
+
+      <button (click)="onClose()" class="toast-close-btn" type="button" aria-label="Close notification">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Animated Countdown Bar -->
+    <div class="toast-progress-bar"></div>
+  </div>
+}

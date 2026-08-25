@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction, SystemUser } from '../models/solo.models';
+import { StatMetric, ApplicationRecord, AdminOnDuty, AgendaItem, QuickAction, SystemUser, UserStatus } from '../models/solo.models';
 
 
 @Injectable({
@@ -125,7 +125,7 @@ export class SoloService {
     },
   ];
 
-  private admins: AdminOnDuty[] = [
+  private readonly defaultAdmins: AdminOnDuty[] = [
     {
       id: 1,
       name: 'Admin Administrator',
@@ -219,6 +219,31 @@ export class SoloService {
     },
   ];
 
+  private admins: AdminOnDuty[] = this.loadAdmins();
+
+  private loadAdmins(): AdminOnDuty[] {
+    try {
+      const saved = localStorage.getItem('solo_admins');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Error loading admins from localStorage', e);
+    }
+    return [...this.defaultAdmins];
+  }
+
+  private saveAdmins(): void {
+    try {
+      localStorage.setItem('solo_admins', JSON.stringify(this.admins));
+    } catch (e) {
+      console.error('Error saving admins to localStorage', e);
+    }
+  }
+
   private readonly agendas: AgendaItem[] = [
     {
       id: 1,
@@ -294,6 +319,7 @@ export class SoloService {
       }
       return user;
     });
+    this.saveAdmins();
   }
 
   addApplication(application: Omit<ApplicationRecord, 'id' | 'avatarChar' | 'avatarColor'>): void {
@@ -352,5 +378,39 @@ export class SoloService {
   addSystemUser(user: SystemUser): void {
     this.systemUsers = [user, ...this.systemUsers];
     this.saveSystemUsers();
+
+    // Map new system user to AdminOnDuty so it displays in Dashboard System Users tab & detail modal
+    const newAdmin: AdminOnDuty = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role === 'SOLO PARENT' ? 'Solo Parent Applicant' : (user.role === 'ADMIN' ? 'LGU Social Welfare Officer' : 'Federation Head'),
+      department: user.barangay && user.barangay !== 'N/A' ? `${user.barangay} Unit` : 'CSWDO / MSWDO',
+      contactNo: '(044) 940-0000',
+      isOnline: user.status === 'ACTIVE',
+      statusText: user.status === 'ACTIVE' ? 'ONLINE NOW' : 'OFFLINE',
+      avatarChar: user.avatarChar,
+      shiftTime: '8:00 AM - 5:00 PM',
+      dateCreated: 'Today',
+    };
+
+    if (!this.admins.some(a => a.id === user.id || a.email === user.email)) {
+      this.admins = [newAdmin, ...this.admins];
+      this.saveAdmins();
+    }
+  }
+
+  toggleSystemUserStatus(userId: number): SystemUser | null {
+    let updatedUser: SystemUser | null = null;
+    this.systemUsers = this.systemUsers.map(user => {
+      if (user.id === userId) {
+        const nextStatus: UserStatus = user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        updatedUser = { ...user, status: nextStatus };
+        return updatedUser;
+      }
+      return user;
+    });
+    this.saveSystemUsers();
+    return updatedUser;
   }
 }
