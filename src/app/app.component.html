@@ -4,28 +4,16 @@
       <ion-content>
         <div class="sidebar-header">
           <div class="brand-container">
-            <div class="brand-badge">
-              <ion-icon name="grid" aria-hidden="true"></ion-icon>
-            </div>
+            <img src="assets/projectsolo.png" alt="Project SOLO Logo" class="brand-logo-img" />
             <div class="brand-text">
-              <h2>Projectsulo</h2>
-              <p>Navigation System</p>
-            </div>
-          </div>
-
-          <div class="user-profile-card">
-            <div class="user-avatar">
-              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-            </div>
-            <div class="user-info">
-              <span class="user-name">John Doe</span>
-              <span class="user-role">Administrator</span>
+              <span class="brand-title">Project</span>
+              <span class="brand-subtitle">SOLO</span>
             </div>
           </div>
         </div>
 
         <ion-list id="main-menu-list" lines="none">
-          <ion-list-header>Main Menu</ion-list-header>
+          <ion-list-header>NAVIGATION</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -38,10 +26,20 @@
 
       <ion-footer class="ion-no-border">
         <div class="sidebar-footer">
+          <div class="user-profile-card">
+            <div class="user-avatar-initial">
+              <span>A</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Admin Administrator</span>
+              <span class="user-role">Admin Officer</span>
+            </div>
+          </div>
+
           <ion-menu-toggle auto-hide="false">
-            <ion-button expand="block" fill="clear" color="danger" class="logout-btn">
+            <ion-button expand="block" fill="clear" class="signout-btn">
               <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
-              Logout
+              Sign Out
             </ion-button>
           </ion-menu-toggle>
         </div>
@@ -51,4 +49,3 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
-

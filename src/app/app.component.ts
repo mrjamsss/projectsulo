@@ -20,12 +20,10 @@ import { addIcons } from 'ionicons';
 import {
   gridOutline,
   gridSharp,
-  personAddOutline,
-  personAddSharp,
+  peopleOutline,
+  peopleSharp,
   logOutOutline,
-  logOutSharp,
-  personOutline,
-  personSharp
+  logOutSharp
 } from 'ionicons/icons';
 
 @Component({
@@ -54,21 +52,17 @@ import {
 export class AppComponent {
   public appPages = [
     { title: 'Dashboard', url: '/dashboard', icon: 'grid' },
-    { title: 'Add Account', url: '/add-account', icon: 'person-add' },
+    { title: 'User Management', url: '/add-account', icon: 'people' },
   ];
 
   constructor() {
     addIcons({
       gridOutline,
       gridSharp,
-      personAddOutline,
-      personAddSharp,
+      peopleOutline,
+      peopleSharp,
       logOutOutline,
-      logOutSharp,
-      personOutline,
-      personSharp
+      logOutSharp
     });
   }
 }
-
-
